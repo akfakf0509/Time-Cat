@@ -161,6 +161,7 @@ GraphicManager::GraphicManager()
 	deviceContext_->CreateEffect(CLSID_D2D13DTransform, &effects_[ET_3DTransform]);
 	deviceContext_->CreateEffect(CLSID_D2D13DPerspectiveTransform, &effects_[ET_3DPerspectiveTransform]);
 	deviceContext_->CreateEffect(CLSID_D2D1Tile, &effects_[ET_Tile]);
+	deviceContext_->CreateEffect(CLSID_D2D1Blend, &effects_[ET_Blend]);
 
 	device->Release();
 	context->Release();

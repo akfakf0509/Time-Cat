@@ -6,6 +6,7 @@
 #include "SpriteRenderer.h"
 #include "AnimationRenderer.h"
 #include "Button.h"
+#include "Effect.h"
 
 SickRoom::SickRoom() {
 	background = CreateObject();
@@ -13,6 +14,8 @@ SickRoom::SickRoom() {
 		->SetTexture("Resources/Sprites/SickRoomBackground/SickRoomAllView.png");
 	background->GetComponent<Transform>()
 		->SetAnchor(background->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter());
+	background->AttachComponent<Effect>()
+		->PushEffectInfo(new BlendEffectInfo(D2D1_BLEND_MODE_VIVID_LIGHT, RG2R_TextureM->Load("Resources/Sprites/SickRoomBackground/Light.png")->GetBitmap()));
 
 	shelf = CreateObject();
 	shelf->AttachComponent<SpriteRenderer>()
@@ -42,12 +45,12 @@ SickRoom::SickRoom() {
 	carpet->onClickEnter = []() {cout << "Carpet Clicked" << endl; };
 
 
-	light = CreateObject();
-	light->AttachComponent<SpriteRenderer>()
-		->SetTexture("Resources/Sprites/SickRoomBackground/Light.png");
-	light->GetComponent<Transform>()
-		->SetAnchor(light->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter())
-		->SetPos(3.2f, 0.05f);
+	//light = CreateObject();
+	//light->AttachComponent<SpriteRenderer>()
+	//	->SetTexture("Resources/Sprites/SickRoomBackground/Light.png");
+	//light->GetComponent<Transform>()
+	//	->SetAnchor(light->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter())
+	//	->SetPos(3.2f, 0.05f);
 
 	bed = CreateObject();
 	bed->AttachComponent<SpriteRenderer>()
@@ -67,7 +70,7 @@ SickRoom::SickRoom() {
 	cat->AttachComponent<AnimationRenderer>()
 		->PushTextures("Resources/Sprites/CatAnimations/EarAnimation")
 		->PushTextures("Resources/Sprites/CatAnimations/TailAnimation")
-		->SetTargetAnim(0)
+		->SetTargetAnim(1)
 		->SetInterval(0.1f)
 		->SetIsLoop(false);
 }

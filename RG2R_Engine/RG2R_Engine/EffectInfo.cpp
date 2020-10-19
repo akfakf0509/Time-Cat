@@ -267,6 +267,9 @@ ID2D1Image * MorphologyEffectInfo::GetOutputImage(ID2D1Image * input)
 	return output;
 }
 
+#pragma endregion
+
+#pragma region TDRotationEffectInfo
 TDRotationEffectInfo::TDRotationEffectInfo(D2D1_VECTOR_3F vec)
 {
 	this->vec = vec;
@@ -288,6 +291,9 @@ ID2D1Image* TDRotationEffectInfo::GetOutputImage(ID2D1Image* input)
 	return output;
 }
 
+#pragma endregion
+
+#pragma region BrightnessEffectInfo
 BrightnessEffectInfo::BrightnessEffectInfo(float whiteStart, float whiteEnd, float blackStart, float blackEnd)
 	: whiteStart(whiteStart), blackStart(blackStart), whiteEnd(whiteEnd), blackEnd(blackEnd)
 {
@@ -311,6 +317,9 @@ ID2D1Image* BrightnessEffectInfo::GetOutputImage(ID2D1Image* input)
 	return output;
 }
 
+#pragma endregion
+
+#pragma region GaussianBlurEffectInfo
 GaussianBlurEffectInfo::GaussianBlurEffectInfo(float level)
 	: level(level) {}
 
@@ -324,6 +333,28 @@ ID2D1Image* GaussianBlurEffectInfo::GetOutputImage(ID2D1Image* input)
 	auto e = RG2R_GraphicM->GetEffect(ET_GaussianBlur);
 	e->SetInput(0, input);
 	e->SetValue(D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, level);
+
+	ID2D1Image* output;
+	e->GetOutput(&output);
+	return output;
+}
+
+#pragma endregion
+
+#pragma region BlendEffectInfo
+BlendEffectInfo::BlendEffectInfo(D2D1_BLEND_MODE blendMode, ID2D1Image* targetImage) 
+	: blendMode(blendMode), targetImage(targetImage) {}
+
+BlendEffectInfo::~BlendEffectInfo()
+{
+
+}
+
+ID2D1Image* BlendEffectInfo::GetOutputImage(ID2D1Image* input) {
+	auto e = RG2R_GraphicM->GetEffect(ET_Blend);
+	e->SetInput(0, input);
+	e->SetInput(1, targetImage);
+	e->SetValue(D2D1_BLEND_PROP_MODE, blendMode);
 
 	ID2D1Image* output;
 	e->GetOutput(&output);

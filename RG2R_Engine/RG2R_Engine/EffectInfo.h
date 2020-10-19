@@ -193,3 +193,17 @@ public:
 
 	ID2D1Image* GetOutputImage(ID2D1Image* input) override;
 };
+
+class BlendEffectInfo
+	:public EffectInfo
+{
+public:
+	D2D1_BLEND_MODE blendMode;
+	ID2D1Image* targetImage;
+
+public:
+	BlendEffectInfo(D2D1_BLEND_MODE blendMode, ID2D1Image* targetImage);
+	~BlendEffectInfo();
+
+	ID2D1Image* GetOutputImage(ID2D1Image* input) override;
+};

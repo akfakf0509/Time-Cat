@@ -15,4 +15,5 @@ enum EffectType {
 	ET_3DTransform,
 	ET_3DPerspectiveTransform,
 	ET_Tile,
+	ET_Blend
 };
