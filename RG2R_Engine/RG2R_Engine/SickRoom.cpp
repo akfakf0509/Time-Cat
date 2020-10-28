@@ -8,6 +8,8 @@
 #include "Button.h"
 #include "Effect.h"
 
+#include "Cat.h"
+
 SickRoom::SickRoom() {
 	background = CreateObject();
 	background->AttachComponent<SpriteRenderer>()
@@ -34,16 +36,16 @@ SickRoom::SickRoom() {
 		->SetPos(-0.11f, 2.15f);
 	frame->AttachComponent<Button>();
 	frame->onClickEnter = []() {cout << "Frame Clicked" << endl; };
-	
+
 	carpet = CreateObject();
 	carpet->AttachComponent<SpriteRenderer>()
-		->SetTexture("Resources/Sprites/SickRoomBackground/Carpet.png");
+		->SetTexture("Resources/Sprites/SickRoomBackground/Carpets/Carpet.png");
 	carpet->GetComponent<Transform>()
 		->SetAnchor(carpet->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter())
-		->SetPos(-6.75f, -0.8f);
-	carpet->AttachComponent<Button>();
+		->SetPos(-6.75f, -0.85f);
+	carpet->AttachComponent<Button>()
+		->SetHoverTexture("Resources/Sprites/SickRoomBackground/Carpets/CarpetHover.png");
 	carpet->onClickEnter = []() {cout << "Carpet Clicked" << endl; };
-
 
 	//light = CreateObject();
 	//light->AttachComponent<SpriteRenderer>()
@@ -66,13 +68,7 @@ SickRoom::SickRoom() {
 		->SetAnchor(blanket->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter())
 		->SetPos(-7.05f, 0.3f);
 
-	cat = CreateObject();
-	cat->AttachComponent<AnimationRenderer>()
-		->PushTextures("Resources/Sprites/CatAnimations/EarAnimation")
-		->PushTextures("Resources/Sprites/CatAnimations/TailAnimation")
-		->SetTargetAnim(1)
-		->SetInterval(0.1f)
-		->SetIsLoop(false);
+	cat = AttachObject(new Cat());
 }
 
 SickRoom::~SickRoom() {}
@@ -85,11 +81,7 @@ void SickRoom::OnUpdate() {
 		GetMainCamera()->Translate(0.1f, 0);
 	}
 
-	if (RG2R_InputM->GetKeyState(KeyCode::KEY_P) == KeyState::KEYSTATE_STAY) {
-		cat->GetComponent<AnimationRenderer>()->Play();
-	}
-
-	//Object* object = blanket;
+	//Object* object = cat;
 
 	//if (RG2R_InputM->GetKeyState(KeyCode::KEY_UP) == KeyState::KEYSTATE_STAY) {
 	//	object->GetComponent<Transform>()->Translate(0, 0.05f);

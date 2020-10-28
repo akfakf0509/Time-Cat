@@ -154,6 +154,9 @@
     <Filter Include="소스 파일\Game\Scenes\SickRoom">
       <UniqueIdentifier>{a0de8cd2-7afc-48ec-9921-99bf88f4fdc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Objects\Cat">
+      <UniqueIdentifier>{dd8866cf-3c42-40de-b333-7404e38b1a4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -291,6 +294,9 @@
     <ClInclude Include="SickRoom.h">
       <Filter>소스 파일\Game\Scenes\SickRoom</Filter>
     </ClInclude>
+    <ClInclude Include="Cat.h">
+      <Filter>소스 파일\Game\Objects\Cat</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RG2R_Engine.rc">
@@ -422,6 +428,9 @@
     </ClCompile>
     <ClCompile Include="SickRoom.cpp">
       <Filter>소스 파일\Game\Scenes\SickRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="Cat.cpp">
+      <Filter>소스 파일\Game\Objects\Cat</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

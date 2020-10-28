@@ -10,8 +10,8 @@ private:
 	Object* frame;
 	Object* carpet;
 	Object* blanket;
-	Object* cat;
 	Object* bed;
+	Object* cat;
 public:
 	SickRoom();
 	~SickRoom();
