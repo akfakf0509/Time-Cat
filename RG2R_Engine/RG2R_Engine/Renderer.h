@@ -24,6 +24,9 @@ public:
 	virtual void Draw() = 0;
 	virtual void Draw(ViewRenderData&) = 0;
 
+	virtual Rect GetVisibleArea() = 0;
+	virtual Rect GetRealArea() = 0;
+
 	void SetZ_index(float);
 	float GetZ_index();
 };

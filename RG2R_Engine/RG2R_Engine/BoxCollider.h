@@ -4,7 +4,7 @@ class BoxCollider :
 	public Collider
 {
 private:
-	Vec2F area = { 0, 0 };
+	Vec2F area = { -1, -1 };
 public:
 	BoxCollider();
 	BoxCollider(float, float);
@@ -25,6 +25,7 @@ public:
 
 	BoxCollider* SetArea(Vec2F);
 	BoxCollider* SetArea(float, float);
+	BoxCollider* SetAreaAuto();
 	BoxCollider* SetWidthSize(float);
 	BoxCollider* SetHeightSize(float);
 };

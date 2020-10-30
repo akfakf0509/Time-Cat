@@ -23,19 +23,20 @@ void Rigidbody::Update() {
 
 	std::vector<Object*> objList = GetOwner()->GetScene()->FindObjectsCondition([=](Object* obj) ->bool {
 		return obj == GetOwner() ? false : obj->GetIsEnable() && obj->GetComponent<Rigidbody>();
-		});
-
+	});
 
 	auto ownerboxCollider = GetOwner()->GetComponent<BoxCollider>();
 	auto ownercircleCollider = GetOwner()->GetComponent<CircleCollider>();
 	auto ownertransform = GetOwner()->GetComponent<Transform>();
 
 	for (auto iter : objList) {
-		auto itercirclecollider = iter->GetComponent<CircleCollider>();
 		auto iterboxcollider = iter->GetComponent<BoxCollider>();
+		auto itercirclecollider = iter->GetComponent<CircleCollider>();
 		auto itertransform = iter->GetComponent<Transform>();
 
 		if (iterboxcollider && ownerboxCollider) {
+			bool is_crash = true;
+
 			Vec2F distance = ownertransform->GetPos() - itertransform->GetPos();
 			Vec2F vecs[] = {
 				iterboxcollider->GetWidthSize() * Vec2F(cos(ToRadian(ownertransform->GetRot())), sin(ToRadian(ownertransform->GetRot()))) / 2,
@@ -53,25 +54,27 @@ void Rigidbody::Update() {
 				}
 
 				if (Abs(distance.Dot(unit)) >= sum) {
-					CollisionInfo *collision = new CollisionInfo{ GetOwner() };
-
-					ApplyListener(GetOwner()->onCollisionExitListener, collision);
-					GetOwner()->OnCollisionExit(collision);
-					isFirstCollision = true;
-					return;
+					is_crash = false;
 				}
 			}
 
-			CollisionInfo *collision = new CollisionInfo{ GetOwner() };
+			CollisionInfo *collision = new CollisionInfo{ iter };
 
-			if (isFirstCollision) {
-				ApplyListener(GetOwner()->onCollisionEnterListener, collision);
-				GetOwner()->OnCollisionEnter(collision);
-				isFirstCollision = false;
+			if (is_crash) {
+				if (!isFirstCollision.count(iter) || isFirstCollision[iter]) {
+					ApplyListener(GetOwner()->onCollisionEnterListener, collision);
+					GetOwner()->OnCollisionEnter(collision);
+					isFirstCollision[iter] = false;
+				}
+				else {
+					ApplyListener(GetOwner()->onCollisionStayListener, collision);
+					GetOwner()->OnCollisionStay(collision);
+				}
 			}
-			else {
-				ApplyListener(iter->onCollisionStayListener, collision);
-				iter->OnCollisionStay(collision);
+			else if (isFirstCollision.count(iter) && !isFirstCollision[iter]) {
+				ApplyListener(GetOwner()->onCollisionExitListener, collision);
+				GetOwner()->OnCollisionExit(collision);
+				isFirstCollision[iter] = true;
 			}
 		}
 		else if (itercirclecollider && ownerboxCollider) {
@@ -128,68 +131,55 @@ void Rigidbody::Update() {
 				}
 			}
 
+			Vec2F crashline = ownertransform->GetPos() - itertransform->GetPos();
+
+			if (abs(crashline.x) > abs(crashline.y)) {
+				crashline = a1;
+			}
+			else {
+				crashline = a2;
+			}
+
+			CollisionInfo *collision = new CollisionInfo{ iter , crashline };
+
 			if (is_crash) {
-				Vec2F crashline = ownertransform->GetPos() - itertransform->GetPos();
-
-				if (abs(crashline.x) > abs(crashline.y)) {
-					crashline = a1;
-				}
-				else {
-					crashline = a2;
-				}
-
-				CollisionInfo *collision = new CollisionInfo{ GetOwner() , crashline };
-
-				if (isFirstCollision) {
+				if (!isFirstCollision.count(iter) || isFirstCollision[iter]) {
 					ApplyListener(GetOwner()->onCollisionEnterListener, collision);
 					GetOwner()->OnCollisionEnter(collision);
-					isFirstCollision = false;
+					isFirstCollision[iter] = false;
 				}
 				else {
 					ApplyListener(GetOwner()->onCollisionStayListener, collision);
 					GetOwner()->OnCollisionStay(collision);
 				}
 			}
-			else {
-				Vec2F crashline = ownertransform->GetPos() - itertransform->GetPos();
-
-				if (abs(crashline.x) > abs(crashline.y)) {
-					crashline = a1;
-				}
-				else {
-					crashline = a2;
-				}
-
-				CollisionInfo *collision = new CollisionInfo{ GetOwner() , crashline };
-
+			else if (isFirstCollision.count(iter) && !isFirstCollision[iter]) {
 				ApplyListener(GetOwner()->onCollisionExitListener, collision);
 				GetOwner()->OnCollisionExit(collision);
-				isFirstCollision = true;
+				isFirstCollision[iter] = true;
 			}
 		}
 		else if (itercirclecollider && ownercircleCollider) {
 			Vec2F distance = ownertransform->GetPos() - itertransform->GetPos();
 
-			if (itercirclecollider->GetRad() + ownercircleCollider->GetRad() >= sqrt(pow(distance.x, 2) + pow(distance.y, 2))) {
-				Vec2F crashline = distance.Normalize();
-				CollisionInfo *collision = new CollisionInfo{ GetOwner() , crashline };
+			Vec2F crashline = distance.Normalize();
+			CollisionInfo *collision = new CollisionInfo{ iter , crashline };
 
-				if (isFirstCollision) {
+			if (itercirclecollider->GetRad() + ownercircleCollider->GetRad() >= sqrt(pow(distance.x, 2) + pow(distance.y, 2))) {
+				if (!isFirstCollision.count(iter) || isFirstCollision[iter]) {
 					ApplyListener(GetOwner()->onCollisionEnterListener, collision);
 					GetOwner()->OnCollisionEnter(collision);
-					isFirstCollision = false;
+					isFirstCollision[iter] = false;
 				}
 				else {
 					ApplyListener(GetOwner()->onCollisionStayListener, collision);
 					GetOwner()->OnCollisionStay(collision);
 				}
 			}
-			else {
-				Vec2F crashline(0, 0);
-				CollisionInfo *collision = new CollisionInfo{ GetOwner() , crashline };
+			else if (isFirstCollision.count(iter) && !isFirstCollision[iter]) {
 				ApplyListener(GetOwner()->onCollisionExitListener, collision);
 				GetOwner()->OnCollisionExit(collision);
-				isFirstCollision = true;
+				isFirstCollision[iter] = true;
 			}
 		}
 	}

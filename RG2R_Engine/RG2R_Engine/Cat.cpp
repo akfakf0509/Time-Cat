@@ -4,6 +4,7 @@
 #include "SpriteRenderer.h"
 #include "Transform.h"
 #include "Engine.h"
+#include "RandomGenerator.h"
 
 Cat::Cat() {
 }
@@ -14,7 +15,9 @@ Cat::~Cat() {
 void Cat::OnStart() {
 	ear = CreateObject();
 	ear->AttachComponent<AnimationRenderer>()
-		->PushTextures("Resources/Sprites/CatAnimations/EarAnimation");
+		->PushTextures("Resources/Sprites/CatAnimations/EarAnimation")
+		->SetIsLoop(false)
+		->SetInterval(0.05f);
 	ear->GetComponent<Transform>()->SetAnchor(ear->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter());
 
 	eyes.push_back(CreateObject());
@@ -47,5 +50,15 @@ void Cat::OnUpdate() {
 		auto distance = RG2R_InputM->GetMouseWorldPos() - eye_transforms[i]->GetPos() + Vec2F(-0.36f + i * 0.35f, -0.45f);
 
 		eye_transforms[i]->SetPos(distance.Normalize() / 100);
+	}
+
+	ear_animation_interval -= RG2R_TimeM->GetDeltaTime();
+
+	if (ear_animation_interval <= 0) {
+		auto randomgenerator = new RandomGenerator();
+		ear_animation_interval = randomgenerator->GetInt(1, 5);
+
+		ear->GetComponent<AnimationRenderer>()
+			->Play();
 	}
 }

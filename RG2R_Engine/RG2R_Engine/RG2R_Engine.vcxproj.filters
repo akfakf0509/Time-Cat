@@ -157,6 +157,9 @@
     <Filter Include="소스 파일\Game\Objects\Cat">
       <UniqueIdentifier>{dd8866cf-3c42-40de-b333-7404e38b1a4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Objects\WebToon">
+      <UniqueIdentifier>{1381af72-6d71-4a95-bba1-d38f9fbe2a3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -297,6 +300,9 @@
     <ClInclude Include="Cat.h">
       <Filter>소스 파일\Game\Objects\Cat</Filter>
     </ClInclude>
+    <ClInclude Include="WebToon.h">
+      <Filter>소스 파일\Game\Objects\WebToon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RG2R_Engine.rc">
@@ -431,6 +437,9 @@
     </ClCompile>
     <ClCompile Include="Cat.cpp">
       <Filter>소스 파일\Game\Objects\Cat</Filter>
+    </ClCompile>
+    <ClCompile Include="WebToon.cpp">
+      <Filter>소스 파일\Game\Objects\WebToon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

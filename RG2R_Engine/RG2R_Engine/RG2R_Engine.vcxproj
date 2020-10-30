@@ -202,6 +202,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="ViewRenderData.h" />
     <ClInclude Include="ViewRenderer.h" />
+    <ClInclude Include="WebToon.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="CollisionInfo.h" />
   </ItemGroup>
@@ -250,6 +251,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="ViewRenderData.cpp" />
     <ClCompile Include="ViewRenderer.cpp" />
+    <ClCompile Include="WebToon.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>

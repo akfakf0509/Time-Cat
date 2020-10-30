@@ -1,6 +1,8 @@
 #pragma once
 #include "Component.h"
 
+#include <map>
+
 class CollisionInfo;
 
 class Rigidbody :
@@ -12,7 +14,7 @@ private:
 
 	float calculation_speed = 15;
 
-	bool isFirstCollision = true;
+	std::map<Object*, bool> isFirstCollision;
 public:
 	Rigidbody();
 	~Rigidbody();

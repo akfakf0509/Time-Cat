@@ -7,11 +7,15 @@
 #include "AnimationRenderer.h"
 #include "Button.h"
 #include "Effect.h"
+#include "BoxCollider.h"
+#include "Rigidbody.h"
+#include "CollisionInfo.h"
 
 #include "Cat.h"
 
 SickRoom::SickRoom() {
 	background = CreateObject();
+	background->SetName("Background");
 	background->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/SickRoomBackground/SickRoomAllView.png");
 	background->GetComponent<Transform>()
@@ -20,6 +24,7 @@ SickRoom::SickRoom() {
 		->PushEffectInfo(new BlendEffectInfo(D2D1_BLEND_MODE_VIVID_LIGHT, RG2R_TextureM->Load("Resources/Sprites/SickRoomBackground/Light.png")->GetBitmap()));
 
 	shelf = CreateObject();
+	shelf->SetName("Shelf");
 	shelf->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/SickRoomBackground/Shelf.png");
 	shelf->GetComponent<Transform>()
@@ -29,6 +34,7 @@ SickRoom::SickRoom() {
 	shelf->onClickEnter = []() {cout << "Shelf Clicked" << endl; };
 
 	frame = CreateObject();
+	frame->SetName("Frame");
 	frame->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/SickRoomBackground/Frame.png");
 	frame->GetComponent<Transform>()
@@ -38,6 +44,7 @@ SickRoom::SickRoom() {
 	frame->onClickEnter = []() {cout << "Frame Clicked" << endl; };
 
 	carpet = CreateObject();
+	carpet->SetName("Carpet");
 	carpet->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/SickRoomBackground/Carpets/Carpet.png");
 	carpet->GetComponent<Transform>()
@@ -69,6 +76,8 @@ SickRoom::SickRoom() {
 		->SetPos(-7.05f, 0.3f);
 
 	cat = AttachObject(new Cat());
+	cat->AttachComponent<Effect>()
+		->PushEffectInfo(new BlendEffectInfo(D2D1_BLEND_MODE_VIVID_LIGHT, RG2R_TextureM->Load("Resources/Sprites/SickRoomBackground/Light.png")->GetBitmap()));
 }
 
 SickRoom::~SickRoom() {}

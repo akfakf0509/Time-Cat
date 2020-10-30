@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "BoxCollider.h"
 #include "Transform.h"
-#include "SpriteRenderer.h"
+#include "Renderer.h"
 
 BoxCollider::BoxCollider()
 {
@@ -14,14 +14,6 @@ BoxCollider::BoxCollider(float _width, float _height) {
 
 BoxCollider::~BoxCollider()
 {
-}
-
-void BoxCollider::OnStart() {
-	SpriteRenderer* spriteRenderer = GetOwner()->GetComponent<SpriteRenderer>();
-
-	if (spriteRenderer != nullptr) {
-		area = { spriteRenderer->GetRealArea().right / INCH_PER_DISTANCE, spriteRenderer->GetRealArea().bottom /INCH_PER_DISTANCE };
-	}
 }
 
 Vec2F BoxCollider::GetArea() {
@@ -44,6 +36,19 @@ BoxCollider* BoxCollider::SetArea(Vec2F area) {
 
 BoxCollider* BoxCollider::SetArea(float width, float height) {
 	this->area = { width, height };
+
+	return this;
+}
+
+BoxCollider* BoxCollider::SetAreaAuto() {
+	Renderer* renderer = GetOwner()->GetComponent<Renderer>();
+
+	if (renderer != nullptr) {
+		area = { area.x == -1 ? renderer->GetVisibleArea().right / INCH_PER_DISTANCE : area.x,  area.y == -1 ? renderer->GetVisibleArea().bottom / INCH_PER_DISTANCE : area.y };
+	}
+	else {
+		std::cout << "Renderer is undefined" << std::endl;
+	}
 
 	return this;
 }
