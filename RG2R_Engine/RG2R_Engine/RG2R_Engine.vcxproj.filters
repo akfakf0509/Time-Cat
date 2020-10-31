@@ -151,14 +151,17 @@
     <Filter Include="소스 파일\Engine\Element\Component\Components\Button">
       <UniqueIdentifier>{a3f2b3b0-e4d8-4ecd-8ab6-273bfdb0d58a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Scenes\SickRoom">
-      <UniqueIdentifier>{a0de8cd2-7afc-48ec-9921-99bf88f4fdc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Objects\Cat">
       <UniqueIdentifier>{dd8866cf-3c42-40de-b333-7404e38b1a4d}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Game\Objects\WebToon">
       <UniqueIdentifier>{1381af72-6d71-4a95-bba1-d38f9fbe2a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\MainScene">
+      <UniqueIdentifier>{ac67dcb6-2619-4b4d-89cc-7b22060693ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\SickRoom">
+      <UniqueIdentifier>{a0de8cd2-7afc-48ec-9921-99bf88f4fdc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -303,6 +306,9 @@
     <ClInclude Include="WebToon.h">
       <Filter>소스 파일\Game\Objects\WebToon</Filter>
     </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>소스 파일\Game\Scenes\MainScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RG2R_Engine.rc">
@@ -440,6 +446,9 @@
     </ClCompile>
     <ClCompile Include="WebToon.cpp">
       <Filter>소스 파일\Game\Objects\WebToon</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>소스 파일\Game\Scenes\MainScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

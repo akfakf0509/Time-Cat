@@ -6,10 +6,11 @@
 #include <iostream>
 
 #include "SickRoom.h"
+#include "MainScene.h"
 
 Scene* SceneManager::FirstScene()
 {
-	return new SickRoom();
+	return new MainScene();
 }
 
 SceneManager::SceneManager()

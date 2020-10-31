@@ -72,12 +72,10 @@ SickRoom::SickRoom() {
 	blanket->AttachComponent<AnimationRenderer>()
 		->PushTextures("Resources/Sprites/SickRoomBackground/BlanketAnimation");
 	blanket->GetComponent<Transform>()
-		->SetAnchor(blanket->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter())
-		->SetPos(-7.05f, 0.3f);
+		->SetAnchor(blanket->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(-5.95f, 1.4f);
 
 	cat = AttachObject(new Cat());
-	cat->AttachComponent<Effect>()
-		->PushEffectInfo(new BlendEffectInfo(D2D1_BLEND_MODE_VIVID_LIGHT, RG2R_TextureM->Load("Resources/Sprites/SickRoomBackground/Light.png")->GetBitmap()));
 }
 
 SickRoom::~SickRoom() {}
@@ -90,7 +88,7 @@ void SickRoom::OnUpdate() {
 		GetMainCamera()->Translate(0.1f, 0);
 	}
 
-	//Object* object = cat;
+	//Object* object = blanket;
 
 	//if (RG2R_InputM->GetKeyState(KeyCode::KEY_UP) == KeyState::KEYSTATE_STAY) {
 	//	object->GetComponent<Transform>()->Translate(0, 0.05f);

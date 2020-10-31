@@ -5,12 +5,11 @@ class BoxCollider :
 {
 private:
 	Vec2F area = { -1, -1 };
+
 public:
 	BoxCollider();
 	BoxCollider(float, float);
 	~BoxCollider();
-
-	void OnStart();
 
 	void Update() {};
 	void Render() {};
