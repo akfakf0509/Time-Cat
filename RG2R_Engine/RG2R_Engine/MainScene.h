@@ -8,6 +8,8 @@ private:
 	Object* backgrounnd;
 	Object* logo;
 	Object* startText;
+	Object* settingText;
+	Object* exitText;
 public:
 	MainScene();
 	~MainScene();

@@ -206,6 +206,7 @@
     <ClInclude Include="WebToon.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="CollisionInfo.h" />
+    <ClInclude Include="ButtonEffectType.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationRenderData.cpp" />

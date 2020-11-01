@@ -29,11 +29,9 @@ TextRenderData::TextRenderData()
 	IDWriteFontSet* pFontSet;
 	hr = pFontSetBuilder->CreateFontSet(&pFontSet);
 
-	IDWriteFontCollection1* pFontCollection;
-
 	pDWriteFactory->CreateFontCollectionFromFontSet(
 		pFontSet,
-		&pFontCollection
+		&fontCollection
 	);
 
 	fontFamily = Widen("¸¼Àº °íµñ").c_str();
@@ -49,7 +47,7 @@ TextRenderData::TextRenderData()
 
 	RG2R_GraphicM->GetDwFactory()->CreateTextFormat(
 		fontFamily,
-		pFontCollection,
+		fontCollection,
 		weight,
 		style,
 		DWRITE_FONT_STRETCH_NORMAL,
@@ -248,7 +246,7 @@ TextRenderData* TextRenderData::SetSize(float size)
 
 	RG2R_GraphicM->GetDwFactory()->CreateTextFormat(
 		fontFamily,
-		NULL,
+		fontCollection,
 		weight,
 		style,
 		stretch,

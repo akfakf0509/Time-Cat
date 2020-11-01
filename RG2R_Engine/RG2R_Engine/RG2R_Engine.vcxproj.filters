@@ -294,9 +294,6 @@
     <ClInclude Include="CollisionInfo.h">
       <Filter>소스 파일\Engine\Element\Component\Components\Rigidbody</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>소스 파일\Engine\Element\Component\Components\Button</Filter>
-    </ClInclude>
     <ClInclude Include="SickRoom.h">
       <Filter>소스 파일\Game\Scenes\SickRoom</Filter>
     </ClInclude>
@@ -308,6 +305,12 @@
     </ClInclude>
     <ClInclude Include="MainScene.h">
       <Filter>소스 파일\Game\Scenes\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonEffectType.h">
+      <Filter>소스 파일\Engine\Element\Component\Components\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>소스 파일\Engine\Element\Component\Components\Button</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 #include "Math.h"
 #include <string>
+#include <dwrite_3.h>
 
 enum TextAlignment
 {
@@ -14,6 +15,7 @@ class TextRenderData
 private:
 	IDWriteTextFormat* format;
 	IDWriteTextLayout* layout;
+	IDWriteFontCollection1* fontCollection;
 	DWRITE_TEXT_RANGE textRange;
 
 	LPCWSTR fontFamily;

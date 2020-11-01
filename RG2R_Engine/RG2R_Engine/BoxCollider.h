@@ -4,7 +4,7 @@ class BoxCollider :
 	public Collider
 {
 private:
-	Vec2F area = { -1, -1 };
+	Vec2F area = { 0, 0 };
 
 public:
 	BoxCollider();
