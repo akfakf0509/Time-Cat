@@ -3,8 +3,39 @@
 #include "Engine.h"
 #include <string>
 
+#include <dwrite_3.h>
+
 TextRenderData::TextRenderData()
 {
+	IDWriteFactory5* pDWriteFactory = nullptr;
+	HRESULT hr =
+		DWriteCreateFactory(
+			DWRITE_FACTORY_TYPE_SHARED,
+			__uuidof(IDWriteFactory5),
+			reinterpret_cast<IUnknown**>(&pDWriteFactory));
+
+	IDWriteFontSetBuilder1* pFontSetBuilder = nullptr;;
+	if (SUCCEEDED(hr)) {
+		hr = pDWriteFactory->CreateFontSetBuilder(&pFontSetBuilder);
+	}
+
+	IDWriteFontFile* pFontFile = nullptr;
+	if (SUCCEEDED(hr)) {
+		hr = pDWriteFactory->CreateFontFileReference(L"Resources/Fonts/Font.otf", nullptr, &pFontFile); //윈도우 10버전 이상부터 사용가능
+	}
+
+	hr = pFontSetBuilder->AddFontFile(pFontFile);
+
+	IDWriteFontSet* pFontSet;
+	hr = pFontSetBuilder->CreateFontSet(&pFontSet);
+
+	IDWriteFontCollection1* pFontCollection;
+
+	pDWriteFactory->CreateFontCollectionFromFontSet(
+		pFontSet,
+		&pFontCollection
+	);
+
 	fontFamily = Widen("맑은 고딕").c_str();
 	weight = DWRITE_FONT_WEIGHT_REGULAR;
 	style = DWRITE_FONT_STYLE_NORMAL;
@@ -18,7 +49,7 @@ TextRenderData::TextRenderData()
 
 	RG2R_GraphicM->GetDwFactory()->CreateTextFormat(
 		fontFamily,
-		NULL,
+		pFontCollection,
 		weight,
 		style,
 		DWRITE_FONT_STRETCH_NORMAL,
