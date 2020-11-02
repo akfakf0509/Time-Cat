@@ -154,14 +154,14 @@
     <Filter Include="소스 파일\Game\Objects\Cat">
       <UniqueIdentifier>{dd8866cf-3c42-40de-b333-7404e38b1a4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Objects\WebToon">
-      <UniqueIdentifier>{1381af72-6d71-4a95-bba1-d38f9fbe2a3c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Scenes\MainScene">
       <UniqueIdentifier>{ac67dcb6-2619-4b4d-89cc-7b22060693ad}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Game\Scenes\SickRoom">
       <UniqueIdentifier>{a0de8cd2-7afc-48ec-9921-99bf88f4fdc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\PrologueScene">
+      <UniqueIdentifier>{a5ee47d9-6e2f-4b15-a70e-caa8a7cc780c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -300,9 +300,6 @@
     <ClInclude Include="Cat.h">
       <Filter>소스 파일\Game\Objects\Cat</Filter>
     </ClInclude>
-    <ClInclude Include="WebToon.h">
-      <Filter>소스 파일\Game\Objects\WebToon</Filter>
-    </ClInclude>
     <ClInclude Include="MainScene.h">
       <Filter>소스 파일\Game\Scenes\MainScene</Filter>
     </ClInclude>
@@ -311,6 +308,12 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>소스 파일\Engine\Element\Component\Components\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="PrologueScene.h">
+      <Filter>소스 파일\Game\Scenes\PrologueScene</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicPlayer.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -447,11 +450,14 @@
     <ClCompile Include="Cat.cpp">
       <Filter>소스 파일\Game\Objects\Cat</Filter>
     </ClCompile>
-    <ClCompile Include="WebToon.cpp">
-      <Filter>소스 파일\Game\Objects\WebToon</Filter>
-    </ClCompile>
     <ClCompile Include="MainScene.cpp">
       <Filter>소스 파일\Game\Scenes\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PrologueScene.cpp">
+      <Filter>소스 파일\Game\Scenes\PrologueScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicPlayer.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

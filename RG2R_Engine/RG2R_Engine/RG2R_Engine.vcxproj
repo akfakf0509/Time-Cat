@@ -180,7 +180,9 @@
     <ClInclude Include="KeyCode.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Math.h" />
+    <ClInclude Include="MusicPlayer.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PrologueScene.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
@@ -203,7 +205,6 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="ViewRenderData.h" />
     <ClInclude Include="ViewRenderer.h" />
-    <ClInclude Include="WebToon.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="ButtonEffectType.h" />
@@ -229,7 +230,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Math.cpp" />
+    <ClCompile Include="MusicPlayer.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PrologueScene.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
@@ -254,7 +257,6 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="ViewRenderData.cpp" />
     <ClCompile Include="ViewRenderer.cpp" />
-    <ClCompile Include="WebToon.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,15 +1,29 @@
 #include "stdafx.h"
 #include "MainScene.h"
 
+#include "MusicPlayer.h"
 #include "AnimationRenderer.h"
 #include "SpriteRenderer.h"
 #include "TextRenderer.h"
 #include "BoxCollider.h"
 #include "Button.h"
 #include "Transform.h"
+#include "RandomGenerator.h"
 #include "Engine.h"
 
+#include "PrologueScene.h"
+
 MainScene::MainScene() {
+	musicPlayer = CreateObject()->AttachComponent<MusicPlayer>();
+
+	musicPaths.push_back(L"Resources/Musics/Ujabes - Kafka On The Shore.mp3");
+	musicPaths.push_back(L"Resources/Musics/Ujabes - Love Cells.mp3");
+	musicPaths.push_back(L"Resources/Musics/Ujabes - Violet Candle.mp3");
+
+	musicLengths.push_back(152);
+	musicLengths.push_back(118);
+	musicLengths.push_back(161);
+
 	backgrounnd = CreateObject();
 	backgrounnd->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/MainScene/Background.jpg");
@@ -39,7 +53,7 @@ MainScene::MainScene() {
 		->SetButtonEffectType(ButtonEffectType::ScaleChange);
 	startText->GetComponent<Transform>()
 		->SetPos(-6.f, 0.4f);
-	startText->onClickExit = []() { cout << "Test" << endl; };
+	startText->onClickExit = []() { RG2R_SceneM->ChangeScene(new PrologueScene()); };
 
 	settingText = CreateObject();
 	settingText->AttachComponent<TextRenderer>()
@@ -71,7 +85,7 @@ MainScene::MainScene() {
 		->SetButtonEffectType(ButtonEffectType::ScaleChange);
 	exitText->GetComponent<Transform>()
 		->SetPos(-10.f, -0.8f);
-	exitText->onClickExit = []() { cout << "Test" << endl; };
+	exitText->onClickExit = []() { RG2R_WindowM->Close(); };
 
 	logo = CreateObject();
 	logo->AttachComponent<SpriteRenderer>()
@@ -86,16 +100,36 @@ MainScene::~MainScene() {
 }
 
 void MainScene::OnUpdate() {
-	if (startText->GetComponent<Transform>()->GetPos().x < -4.3f) {
-		startText->GetComponent<Transform>()->Translate(0.05f, 0);
+	playTime -= RG2R_TimeM->GetDeltaTime();
+
+	if (startText->GetComponent<Transform>()->GetPos().x < -4.4f) {
+		startText->GetComponent<Transform>()->Translate(6.f * RG2R_TimeM->GetDeltaTime(), 0);
+	}
+	else {
+		startText->GetComponent<Transform>()->SetPos(-4.3f, 0.4f);
 	}
 
-	if (settingText->GetComponent<Transform>()->GetPos().x < -4.3f) {
-		settingText->GetComponent<Transform>()->Translate(0.05f, 0);
+	if (settingText->GetComponent<Transform>()->GetPos().x < -4.4f) {
+		settingText->GetComponent<Transform>()->Translate(6.f * RG2R_TimeM->GetDeltaTime(), 0);
+	}
+	else {
+		settingText->GetComponent<Transform>()->SetPos(-4.3f, -0.2f);
 	}
 	
-	if (exitText->GetComponent<Transform>()->GetPos().x < -4.3f) {
-		exitText->GetComponent<Transform>()->Translate(0.05f, 0);
+	if (exitText->GetComponent<Transform>()->GetPos().x < -4.4f) {
+		exitText->GetComponent<Transform>()->Translate(6.f * RG2R_TimeM->GetDeltaTime(), 0);
+	}
+	else {
+		exitText->GetComponent<Transform>()->SetPos(-4.3f, -0.8f);
+	}
+
+	if (playTime < 0) {
+		RandomGenerator* randomGenerator = new RandomGenerator();
+		int index = randomGenerator->GetInt(0, musicPaths.size() - 1);
+
+		musicPlayer->Load(musicPaths[index]);
+		musicPlayer->Play();
+		playTime = musicLengths[index];
 	}
 
 	//Object* object = startText;
