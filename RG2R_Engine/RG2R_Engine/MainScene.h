@@ -5,12 +5,13 @@
 #include <string>
 
 class MusicPlayer;
+class PlayingSongName;
 
 class MainScene :
 	public Scene
 {
 private:
-	std::vector<std::wstring> musicPaths;
+	std::vector<std::string> musicPaths;
 	std::vector<int> musicLengths;
 
 	float playTime = 0;
@@ -26,6 +27,8 @@ private:
 	Object* settingImage;
 	Object* exitText;
 	Object* exitImage;
+
+	PlayingSongName* playingSongName;
 public:
 	MainScene();
 	~MainScene();

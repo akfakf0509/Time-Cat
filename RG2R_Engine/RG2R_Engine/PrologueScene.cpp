@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Engine.h"
 
+#include "PlayingSongName.h"
+
 PrologueScene::PrologueScene() {
 	cut1 = CreateObject();
 
@@ -65,6 +67,10 @@ PrologueScene::PrologueScene() {
 	cut3->GetComponent<Transform>()
 		->SetAnchor(cut3->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
 		->SetPos(0, -12.f);
+
+	playingSongName = new PlayingSongName();
+	AttachObject(playingSongName);
+	playingSongName->commandLists[0]->Start();
 }
 
 PrologueScene::~PrologueScene() {

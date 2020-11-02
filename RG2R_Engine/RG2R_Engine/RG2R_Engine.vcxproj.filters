@@ -163,6 +163,9 @@
     <Filter Include="소스 파일\Game\Scenes\PrologueScene">
       <UniqueIdentifier>{a5ee47d9-6e2f-4b15-a70e-caa8a7cc780c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Game\Objects\PlayingSongName">
+      <UniqueIdentifier>{414f97ac-a888-42ee-ad99-a3053607037e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -315,6 +318,9 @@
     <ClInclude Include="MusicPlayer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="PlayingSongName.h">
+      <Filter>소스 파일\Game\Objects\PlayingSongName</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RG2R_Engine.rc">
@@ -458,6 +464,9 @@
     </ClCompile>
     <ClCompile Include="MusicPlayer.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayingSongName.cpp">
+      <Filter>소스 파일\Game\Objects\PlayingSongName</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

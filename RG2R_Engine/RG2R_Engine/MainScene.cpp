@@ -11,14 +11,16 @@
 #include "RandomGenerator.h"
 #include "Engine.h"
 
+#include "PlayingSongName.h"
+
 #include "PrologueScene.h"
 
 MainScene::MainScene() {
 	musicPlayer = CreateObject()->AttachComponent<MusicPlayer>();
 
-	musicPaths.push_back(L"Resources/Musics/Ujabes - Kafka On The Shore.mp3");
-	musicPaths.push_back(L"Resources/Musics/Ujabes - Love Cells.mp3");
-	musicPaths.push_back(L"Resources/Musics/Ujabes - Violet Candle.mp3");
+	musicPaths.push_back("Ujabes - Kafka On The Shore");
+	musicPaths.push_back("Ujabes - Love Cells");
+	musicPaths.push_back("Ujabes - Violet Candle");
 
 	musicLengths.push_back(152);
 	musicLengths.push_back(118);
@@ -121,6 +123,9 @@ MainScene::MainScene() {
 		->SetAnchor(logo->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
 		->SetScale(0.5f, 0.5f)
 		->SetPos(-2.8f, 2.f);
+
+	playingSongName = new PlayingSongName();
+	AttachObject(playingSongName);
 }
 
 MainScene::~MainScene() {
@@ -154,12 +159,20 @@ void MainScene::OnUpdate() {
 		RandomGenerator* randomGenerator = new RandomGenerator();
 		int index = randomGenerator->GetInt(0, musicPaths.size() - 1);
 
-		musicPlayer->Load(musicPaths[index]);
+		std::string songNameString = "Resources/Musics/" + musicPaths[index] + ".mp3";
+		std::wstring songNameWstring;
+
+		songNameWstring.assign(songNameString.begin(), songNameString.end());
+
+		musicPlayer->Load(songNameWstring);
 		musicPlayer->Play();
 		playTime = musicLengths[index];
+
+		playingSongName->SetText(musicPaths[index]);
+		playingSongName->commandLists[0]->Start();
 	}
 
-	//Object* object = startText;
+	//Object* object = playingSongName;
 
 	//if (RG2R_InputM->GetKeyState(KeyCode::KEY_UP) == KeyState::KEYSTATE_STAY) {
 	//	object->GetComponent<Transform>()->Translate(0, 0.05f);

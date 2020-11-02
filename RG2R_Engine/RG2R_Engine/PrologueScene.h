@@ -1,5 +1,8 @@
 #pragma once
 #include "Scene.h"
+
+class PlayingSongName;
+
 class PrologueScene :
 	public Scene
 {
@@ -17,6 +20,8 @@ private:
 	Object* cut2;
 
 	Object* cut3;
+
+	PlayingSongName* playingSongName;
 public:
 	PrologueScene();
 	~PrologueScene();
