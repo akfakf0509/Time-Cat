@@ -5,8 +5,9 @@
 #include "SpriteRenderer.h"
 #include <iostream>
 
-#include "SickRoom.h"
 #include "MainScene.h"
+#include "PrologueScene.h"
+#include "SickRoom.h"
 
 Scene* SceneManager::FirstScene()
 {

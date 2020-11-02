@@ -48,12 +48,21 @@ MainScene::MainScene() {
 		->SetAlignmentHeight(TextAlignment::ALIGN_CENTER)
 		->SetAlignmentWidth(TextAlignment::ALIGN_LEFT);
 	startText->AttachComponent<BoxCollider>()
-		->SetArea(2.2f, 0.5f);
+		->SetArea(4.f, 0.5f);
 	startText->AttachComponent<Button>()
 		->SetButtonEffectType(ButtonEffectType::ScaleChange);
 	startText->GetComponent<Transform>()
 		->SetPos(-6.f, 0.4f);
 	startText->onClickExit = []() { RG2R_SceneM->ChangeScene(new PrologueScene()); };
+
+	startImage = new Object();
+	startImage->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/MainScene/Play.png");
+	startImage->GetComponent<Transform>()
+		->SetAnchor(startImage->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetScale(0.08f, 0.07f)
+		->SetPos(1.4f, 0);
+	startText->AttachChild(startImage);
 
 	settingText = CreateObject();
 	settingText->AttachComponent<TextRenderer>()
@@ -64,12 +73,21 @@ MainScene::MainScene() {
 		->SetAlignmentHeight(TextAlignment::ALIGN_CENTER)
 		->SetAlignmentWidth(TextAlignment::ALIGN_LEFT);
 	settingText->AttachComponent<BoxCollider>()
-		->SetArea(2.8f, 0.5f);
+		->SetArea(5.3f, 0.5f);
 	settingText->AttachComponent<Button>()
 		->SetButtonEffectType(ButtonEffectType::ScaleChange);
 	settingText->GetComponent<Transform>()
 		->SetPos(-8.f, -0.2f);
 	settingText->onClickExit = []() { cout << "Test" << endl; };
+
+	settingImage = new Object();
+	settingImage->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/MainScene/Setting.png");
+	settingImage->GetComponent<Transform>()
+		->SetAnchor(settingImage->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetScale(0.08f, 0.08f)
+		->SetPos(1.8f, 0);
+	settingText->AttachChild(settingImage);
 
 	exitText = CreateObject();
 	exitText->AttachComponent<TextRenderer>()
@@ -80,12 +98,21 @@ MainScene::MainScene() {
 		->SetAlignmentHeight(TextAlignment::ALIGN_CENTER)
 		->SetAlignmentWidth(TextAlignment::ALIGN_LEFT);
 	exitText->AttachComponent<BoxCollider>()
-		->SetArea(2.f, 0.5f);
+		->SetArea(2.5f, 0.5f);
 	exitText->AttachComponent<Button>()
 		->SetButtonEffectType(ButtonEffectType::ScaleChange);
 	exitText->GetComponent<Transform>()
 		->SetPos(-10.f, -0.8f);
 	exitText->onClickExit = []() { RG2R_WindowM->Close(); };
+
+	exitImage = new Object();
+	exitImage->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/MainScene/Exit.png");
+	exitImage->GetComponent<Transform>()
+		->SetAnchor(settingImage->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetScale(0.07f, 0.08f)
+		->SetPos(1.1f, 0);
+	exitText->AttachChild(exitImage);
 
 	logo = CreateObject();
 	logo->AttachComponent<SpriteRenderer>()

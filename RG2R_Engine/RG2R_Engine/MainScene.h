@@ -21,8 +21,11 @@ private:
 	Object* backgrounnd;
 	Object* logo;
 	Object* startText;
+	Object* startImage;
 	Object* settingText;
+	Object* settingImage;
 	Object* exitText;
+	Object* exitImage;
 public:
 	MainScene();
 	~MainScene();
