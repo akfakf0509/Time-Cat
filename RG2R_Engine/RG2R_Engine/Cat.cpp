@@ -13,41 +13,48 @@ Cat::~Cat() {
 }
 
 void Cat::OnStart() {
-	ear = CreateObject();
+	idle = CreateChildObject();
+	idle->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/CatAnimations/Cat.png");
+	idle->GetComponent<Transform>()->SetAnchor(idle->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter());
+
+	forward = CreateChildObject();
+
+	back = CreateChildObject();
+
+	side = CreateChildObject();
+	side->AttachComponent<AnimationRenderer>()
+		->PushTextures("Resources/Sprites/CatAnimations/Walk")
+		->SetInterval(0.1f);
+	side->GetComponent<Transform>()
+		->SetAnchor(side->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter());
+
+	ear = idle->CreateChildObject();
 	ear->AttachComponent<AnimationRenderer>()
 		->PushTextures("Resources/Sprites/CatAnimations/EarAnimation")
 		->SetIsLoop(false)
 		->SetInterval(0.05f);
 	ear->GetComponent<Transform>()->SetAnchor(ear->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter());
 
-	eyes.push_back(CreateObject());
+	eyes.push_back(idle->CreateChildObject());
 	eyes[0]->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/CatAnimations/Eye/RightEye.png");
 
-	eyes.push_back(CreateObject());
+	eyes.push_back(idle->CreateChildObject());
 	eyes[1]->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/CatAnimations/Eye/LeftEye.png");
-
-	AttachComponent<SpriteRenderer>()
-		->SetTexture("Resources/Sprites/CatAnimations/Cat.png");
-	GetComponent<Transform>()
-		->SetAnchor(GetComponent<SpriteRenderer>()->GetRealArea().GetCenter());
-
-	AttachChild(ear);
 
 	for (auto iter : eyes) {
 		eye_transforms.push_back(iter->GetComponent<Transform>());
 
 		iter->GetComponent<Transform>()
 			->SetAnchor(iter->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter());
-
-		AttachChild(iter);
 	}
 }
 
 void Cat::OnUpdate() {
 	for (int i = 0; i < 2; i++) {
-		auto distance = RG2R_InputM->GetMouseWorldPos() - eye_transforms[i]->GetPos() + Vec2F(-0.36f + i * 0.35f, -0.45f);
+		auto distance = RG2R_InputM->GetMouseWorldPos() - eye_transforms[i]->GetWorldPos() + Vec2F(-0.36f + i * 0.35f, -0.45f);
 
 		eye_transforms[i]->SetPos(distance.Normalize() / 100);
 	}
@@ -61,4 +68,38 @@ void Cat::OnUpdate() {
 		ear->GetComponent<AnimationRenderer>()
 			->Play();
 	}
+
+	if (walkDirection != perWalkDirection) {
+		if (walkDirection == WalkDirection::WALKDIRECTION_NONE) {
+			SetIsFlipX(false);
+
+			idle->SetIsEnable(true);
+			forward->SetIsEnable(false);
+			back->SetIsEnable(false);
+			side->SetIsEnable(false);
+		}
+		else if (walkDirection == WalkDirection::WALKDIRECTION_RIGHT || walkDirection == WalkDirection::WALKDIRECTION_LEFT) {
+			if (walkDirection == WalkDirection::WALKDIRECTION_RIGHT) {
+				SetIsFlipX(false);
+			}
+			else if (walkDirection == WalkDirection::WALKDIRECTION_LEFT) {
+				SetIsFlipX(true);
+			}
+
+			idle->SetIsEnable(false);
+			forward->SetIsEnable(false);
+			back->SetIsEnable(false);
+			side->SetIsEnable(true);
+		}
+	}
+
+	perWalkDirection = walkDirection;
+}
+
+void Cat::SetWalkDirection(WalkDirection walkDirection) {
+	this->walkDirection = walkDirection;
+}
+
+WalkDirection Cat::GetWalkDirection() {
+	return walkDirection;
 }

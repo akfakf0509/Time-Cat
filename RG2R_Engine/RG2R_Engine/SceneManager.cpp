@@ -11,7 +11,7 @@
 
 Scene* SceneManager::FirstScene()
 {
-	return new MainScene();
+	return new SickRoom();
 }
 
 SceneManager::SceneManager()

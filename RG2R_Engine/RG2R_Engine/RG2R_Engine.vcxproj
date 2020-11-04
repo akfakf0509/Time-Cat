@@ -171,6 +171,7 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="CommandList.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="DataManager.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectInfo.h" />
     <ClInclude Include="EffectType.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="MusicPlayer.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="PauseManager.h" />
     <ClInclude Include="PlayingSongName.h" />
     <ClInclude Include="PrologueScene.h" />
     <ClInclude Include="RandomGenerator.h" />
@@ -197,6 +199,7 @@
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TextAnimation.h" />
     <ClInclude Include="TextRenderData.h" />
     <ClInclude Include="TextRenderer.h" />
     <ClInclude Include="Texture.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="CollisionInfo.h" />
     <ClInclude Include="ButtonEffectType.h" />
+    <ClInclude Include="ButtonState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationRenderData.cpp" />
@@ -223,6 +227,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CommandList.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectInfo.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -233,6 +238,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MusicPlayer.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PauseManager.cpp" />
     <ClCompile Include="PlayingSongName.cpp" />
     <ClCompile Include="PrologueScene.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
@@ -250,6 +256,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TextAnimation.cpp" />
     <ClCompile Include="TextRenderData.cpp" />
     <ClCompile Include="TextRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />

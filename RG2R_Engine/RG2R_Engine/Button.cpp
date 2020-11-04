@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Button.h"
+
+#include "Texture.h"
 #include "Engine.h"
 #include "Transform.h"
 #include "SpriteRenderer.h"
@@ -20,7 +22,7 @@ void Button::OnStart() {
 	circleCollider = GetOwner()->GetComponent<CircleCollider>();
 	boxcollider = GetOwner()->GetComponent<BoxCollider>();
 
-	if (effectType == ButtonEffectType::ImageChange) {
+	if (effectType == ButtonEffectType::BUTTONEFFECTTYPE_IMAGECHANGE) {
 		if (spriterenderer == nullptr) {
 			cout << "[" << GetOwner()->GetName() << "] " << "<Button> : Sprite Renderer is nullptr" << endl;
 			SetIsEnable(false);
@@ -45,12 +47,7 @@ void Button::OnUpdate() {
 
 	std::function<void()> checkMouseStat = [=]() {
 		if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_ENTER) {
-			if (effectType == ButtonEffectType::ImageChange) {
-				spriterenderer->SetTexture(pushedTexture);
-			}
-			else if (effectType == ButtonEffectType::ScaleChange) {
-				GetOwner()->GetComponent<Transform>()->SetScale(pushedScale);
-			}
+			StateUpdate(ButtonState::BUTTONSTATE_PUSHED);
 			GetOwner()->OnClickEnter();
 			ApplyListener(GetOwner()->onClickEnter);
 		}
@@ -59,22 +56,12 @@ void Button::OnUpdate() {
 			ApplyListener(GetOwner()->onClickStay);
 		}
 		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_EXIT) {
-			if (effectType == ButtonEffectType::ImageChange) {
-				spriterenderer->SetTexture(hoverTexture);
-			}
-			else if (effectType == ButtonEffectType::ScaleChange) {
-				GetOwner()->GetComponent<Transform>()->SetScale(hoverScale);
-			}
+			StateUpdate(ButtonState::BUTTONSTATE_NONE);
 			GetOwner()->OnClickExit();
 			ApplyListener(GetOwner()->onClickExit);
 		}
 		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_NONE) {
-			if (effectType == ButtonEffectType::ImageChange) {
-				spriterenderer->SetTexture(hoverTexture);
-			}
-			else if (effectType == ButtonEffectType::ScaleChange) {
-				GetOwner()->GetComponent<Transform>()->SetScale(hoverScale);
-			}
+			StateUpdate(ButtonState::BUTTONSTATE_HOVER);
 		}
 	};
 
@@ -84,12 +71,7 @@ void Button::OnUpdate() {
 			checkMouseStat();
 		}
 		else {
-			if (effectType == ButtonEffectType::ImageChange) {
-				spriterenderer->SetTexture(normalTexture);
-			}
-			else if (effectType == ButtonEffectType::ScaleChange) {
-				GetOwner()->GetComponent<Transform>()->SetScale(normalScale);
-			}
+			StateUpdate(ButtonState::BUTTONSTATE_NONE);
 		}
 	}
 	else if (circleCollider != nullptr) {
@@ -97,28 +79,18 @@ void Button::OnUpdate() {
 			checkMouseStat();
 		}
 		else {
-			if (effectType == ButtonEffectType::ImageChange) {
-				spriterenderer->SetTexture(normalTexture);
-			}
-			else if (effectType == ButtonEffectType::ScaleChange) {
-				GetOwner()->GetComponent<Transform>()->SetScale(normalScale);
-			}
+			StateUpdate(ButtonState::BUTTONSTATE_NONE);
 		}
 	}
 	else {
 		Rect rect = spriterenderer->GetRealArea();
 
-		if (position.x - rect.right / INCH_PER_DISTANCE / 2 <= mouseposition.x && mouseposition.x <= position.x + rect.right / INCH_PER_DISTANCE  / 2 &&
-			position.y - rect.bottom / INCH_PER_DISTANCE / 2 <= mouseposition.y && mouseposition.y <= position.y + rect.bottom / INCH_PER_DISTANCE / 2) {
+		if (position.x - rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().x <= mouseposition.x && mouseposition.x <= position.x + rect.right / INCH_PER_DISTANCE  / 2 * transform->GetScale().x &&
+			position.y - rect.bottom / INCH_PER_DISTANCE / 2 * transform->GetScale().y <= mouseposition.y && mouseposition.y <= position.y + rect.bottom / INCH_PER_DISTANCE / 2 * transform->GetScale().y) {
 			checkMouseStat();
 		}
 		else {
-			if (effectType == ButtonEffectType::ImageChange) {
-				spriterenderer->SetTexture(normalTexture);
-			}
-			else if (effectType == ButtonEffectType::ScaleChange) {
-				GetOwner()->GetComponent<Transform>()->SetScale(normalScale);
-			}
+			StateUpdate(ButtonState::BUTTONSTATE_NONE);
 		}
 	}
 }
@@ -137,20 +109,8 @@ Button* Button::SetButtonEffectType(ButtonEffectType effectType) {
 	return this;
 }
 
-Button* Button::SetNormalTexture(Texture* texture) {
-	normalTexture = texture;
-
-	return this;
-}
-
 Button* Button::SetNormalTexture(const std::string& path) {
 	normalTexture = RG2R_TextureM->Load(path);
-
-	return this;
-}
-
-Button* Button::SetHoverTexture(Texture* texture) {
-	hoverTexture = texture;
 
 	return this;
 }
@@ -161,60 +121,74 @@ Button* Button::SetHoverTexture(const std::string& path) {
 	return this;
 }
 
-Button* Button::SetPushedTexture(Texture* texture) {
-	pushedTexture = texture;
-
-	return this;
-}
-
 Button* Button::SetPushedTexture(const std::string& path) {
 	pushedTexture = RG2R_TextureM->Load(path);
 
 	return this;
 }
 
-Button* Button::SetNormalScale(Vec2F scale) {
-	normalScale = scale;
-
-	return this;
-}
-
-Button* Button::SetHoverScale(Vec2F scale) {
-	hoverScale = scale;
-
-	return this;
-}
-
-Button* Button::SetPushedScale(Vec2F scale) {
-	pushedScale = scale;
-
-	return this;
-}
-
-Texture* Button::GetNormalTexture() {
-	return normalTexture;
-}
-
-Texture* Button::GetHoverTexture() {
-	return hoverTexture;
-}
-
-Texture* Button::GetPushedTexture() {
-	return pushedTexture;
-}
-
-Vec2F Button::GetNormalScale() {
-	return normalScale;
-}
-
-Vec2F Button::GetHoverScale() {
-	return hoverScale;
-}
-
-Vec2F Button::GetPushedScale() {
-	return pushedScale;
-}
-
 ButtonEffectType Button::GetButtonEffectType() {
 	return effectType;
+}
+
+void Button::StateUpdate(ButtonState state) {
+	switch (state)
+	{
+	case ButtonState::BUTTONSTATE_NONE:
+		switch (effectType)
+		{
+		case ButtonEffectType::BUTTONEFFECTTYPE_IMAGECHANGE:
+			spriterenderer->SetTexture(normalTexture);
+			break;
+		case ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE:
+			transform->SetScale(normalScale);
+			break;
+		case ButtonEffectType::BUTTONEFFECTTYPE_RUNLAMBDA:
+			normalLambda();
+			break;
+		case ButtonEffectType::BUTTONEFFECTTYPE_NONE:
+			break;
+		default:
+			break;
+		}
+		break;
+	case ButtonState::BUTTONSTATE_PUSHED:
+		switch (effectType)
+		{
+		case BUTTONEFFECTTYPE_IMAGECHANGE:
+			spriterenderer->SetTexture(pushedTexture);
+			break;
+		case BUTTONEFFECTTYPE_SCALECHANGE:
+			transform->SetScale(pushedScale);
+			break;
+		case BUTTONEFFECTTYPE_RUNLAMBDA:
+			pushedlLambda();
+			break;
+		case BUTTONEFFECTTYPE_NONE:
+			break;
+		default:
+			break;
+		}
+		break;
+	case ButtonState::BUTTONSTATE_HOVER:
+		switch (effectType)
+		{
+		case BUTTONEFFECTTYPE_IMAGECHANGE:
+			spriterenderer->SetTexture(hoverTexture);
+			break;
+		case BUTTONEFFECTTYPE_SCALECHANGE:
+			transform->SetScale(hoverScale);
+			break;
+		case BUTTONEFFECTTYPE_RUNLAMBDA:
+			hoverLambda();
+			break;
+		case BUTTONEFFECTTYPE_NONE:
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
 }

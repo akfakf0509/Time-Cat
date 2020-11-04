@@ -11,12 +11,15 @@ class MainScene :
 	public Scene
 {
 private:
+	Vec2F perMousePos;
+
 	std::vector<std::string> musicPaths;
 	std::vector<int> musicLengths;
 
 	float playTime = 0;
-
+private:
 	MusicPlayer* musicPlayer;
+	PlayingSongName* playingSongName;
 
 	Object* cat;
 	Object* backgrounnd;
@@ -27,8 +30,6 @@ private:
 	Object* settingImage;
 	Object* exitText;
 	Object* exitImage;
-
-	PlayingSongName* playingSongName;
 public:
 	MainScene();
 	~MainScene();

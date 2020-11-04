@@ -1,8 +1,10 @@
 #pragma once
 #include "Component.h"
-#include "ButtonEffectType.h"
-#include "Texture.h"
 
+#include "ButtonEffectType.h"
+#include "ButtonState.h"
+
+class Texture;
 class Transform;
 class SpriteRenderer;
 class BoxCollider;
@@ -12,13 +14,15 @@ class Button :
 	public Component
 {
 private:
-	ButtonEffectType effectType = ButtonEffectType::ImageChange;
+	ButtonEffectType effectType = ButtonEffectType::BUTTONEFFECTTYPE_NONE;
+	ButtonState state = ButtonState::BUTTONSTATE_NONE;
 
 	Transform* transform;
 	SpriteRenderer* spriterenderer;
 	BoxCollider* boxcollider;
 	CircleCollider* circleCollider;
 
+public:
 	Texture* normalTexture = nullptr;
 	Texture* hoverTexture = nullptr;
 	Texture* pushedTexture = nullptr;
@@ -26,6 +30,14 @@ private:
 	Vec2F normalScale = Vec2F(1, 1);
 	Vec2F hoverScale = Vec2F(1.1f, 1.1f);
 	Vec2F pushedScale = Vec2F(1.05f, 1.05f);
+
+	std::function<void()> normalLambda = []() {};
+	std::function<void()> hoverLambda = []() {};
+	std::function<void()> pushedlLambda = []() {};
+
+private:
+	void StateUpdate(ButtonState);
+
 public:
 	Button();
 	~Button();
@@ -41,24 +53,9 @@ public:
 
 	Button* SetButtonEffectType(ButtonEffectType);
 
-	Button* SetNormalTexture(Texture*);
-	Button* SetHoverTexture(Texture*);
-	Button* SetPushedTexture(Texture*);
 	Button* SetNormalTexture(const std::string&);
 	Button* SetHoverTexture(const std::string&);
 	Button* SetPushedTexture(const std::string&);
-
-	Button* SetNormalScale(Vec2F);
-	Button* SetHoverScale(Vec2F);
-	Button* SetPushedScale(Vec2F);
-
-	Texture* GetNormalTexture();
-	Texture* GetHoverTexture();
-	Texture* GetPushedTexture();
-
-	Vec2F GetNormalScale();
-	Vec2F GetHoverScale();
-	Vec2F GetPushedScale();
 
 	ButtonEffectType GetButtonEffectType();
 };

@@ -35,7 +35,7 @@ MainScene::MainScene() {
 	cat = CreateObject();
 	cat->AttachComponent<AnimationRenderer>()
 		->PushTextures("Resources/Sprites/CatAnimations/MainScene")
-		->SetInterval(0.1f);
+		->SetInterval(0.15f);
 	cat->GetComponent<Transform>()
 		->SetAnchor(cat->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter())
 		->SetScale(0.7f, 0.7f)
@@ -52,7 +52,7 @@ MainScene::MainScene() {
 	startText->AttachComponent<BoxCollider>()
 		->SetArea(4.f, 0.5f);
 	startText->AttachComponent<Button>()
-		->SetButtonEffectType(ButtonEffectType::ScaleChange);
+		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
 	startText->GetComponent<Transform>()
 		->SetPos(-6.f, 0.4f);
 	startText->onClickExit = []() { RG2R_SceneM->ChangeScene(new PrologueScene()); };
@@ -77,7 +77,7 @@ MainScene::MainScene() {
 	settingText->AttachComponent<BoxCollider>()
 		->SetArea(5.3f, 0.5f);
 	settingText->AttachComponent<Button>()
-		->SetButtonEffectType(ButtonEffectType::ScaleChange);
+		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
 	settingText->GetComponent<Transform>()
 		->SetPos(-8.f, -0.2f);
 	settingText->onClickExit = []() { cout << "Test" << endl; };
@@ -102,7 +102,7 @@ MainScene::MainScene() {
 	exitText->AttachComponent<BoxCollider>()
 		->SetArea(2.5f, 0.5f);
 	exitText->AttachComponent<Button>()
-		->SetButtonEffectType(ButtonEffectType::ScaleChange);
+		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
 	exitText->GetComponent<Transform>()
 		->SetPos(-10.f, -0.8f);
 	exitText->onClickExit = []() { RG2R_WindowM->Close(); };
@@ -164,13 +164,23 @@ void MainScene::OnUpdate() {
 
 		songNameWstring.assign(songNameString.begin(), songNameString.end());
 
-		musicPlayer->Load(songNameWstring);
-		musicPlayer->Play();
+		musicPlayer->Play(songNameWstring);
 		playTime = musicLengths[index];
 
 		playingSongName->SetText(musicPaths[index]);
 		playingSongName->commandLists[0]->Start();
 	}
+
+	if (perMousePos != RG2R_InputM->GetMouseWorldPos()) {
+		cat->GetComponent<AnimationRenderer>()
+			->SetInterval(0.1f);
+	}
+	else {
+		cat->GetComponent<AnimationRenderer>()
+			->SetInterval(0.15f);
+	}
+
+	perMousePos = RG2R_InputM->GetMouseWorldPos();
 
 	//Object* object = playingSongName;
 

@@ -9,10 +9,10 @@ PlayingSongName::PlayingSongName() {
 	CommandList* commandlist = new CommandList();
 	commandlist->PushCommand([=]() { 
 		targetPos = Vec2F(-5.1f, -2.7f);
-	}, 0)
+	}, 2)
 		->PushCommand([=]() {
 		targetPos = Vec2F(-5.1f, -3.1f);
-	}, 3);
+	}, 5);
 
 	commandLists.push_back(commandlist);
 
@@ -32,7 +32,7 @@ PlayingSongName::~PlayingSongName() {
 }
 
 void PlayingSongName::OnUpdate() {
-	GetComponent<Transform>()->SetPos(GetComponent<Transform>()->GetPos() + (targetPos - GetComponent<Transform>()->GetPos()) * RG2R_TimeM->GetDeltaTime() * 6.f);
+	GetComponent<Transform>()->SetPos(GetComponent<Transform>()->GetPos() + (targetPos - GetComponent<Transform>()->GetPos()) * RG2R_TimeM->GetDeltaTime() * 4.f);
 }
 
 void PlayingSongName::SetText(const std::string& songName) {

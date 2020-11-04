@@ -103,4 +103,6 @@ public:
 	Matrix GetDefaultMatrix() { return defaultMatrix; }
 	Matrix GetMatrix_v() { return matrix_v; }
 	Matrix GetDefaultMatrix_v() { return defaultMatrix_v; }
+
+	virtual void Save() {}
 };
