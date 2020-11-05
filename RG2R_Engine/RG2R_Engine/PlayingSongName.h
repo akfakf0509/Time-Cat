@@ -4,7 +4,11 @@ class PlayingSongName :
 	public Object
 {
 private:
-	Vec2F targetPos = { -5.1f, -3.1f };
+	Vec2F targetPos = { -4.9f, -3.3f };
+
+private:
+	Object* songName;
+	Object* record;
 public:
 	PlayingSongName();
 	~PlayingSongName();

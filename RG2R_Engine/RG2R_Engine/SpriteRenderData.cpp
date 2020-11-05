@@ -2,6 +2,8 @@
 #include "SpriteRenderData.h"
 #include "Engine.h"
 
+#include "Transform.h"
+
 SpriteRenderData::SpriteRenderData()
 {
 }

@@ -37,8 +37,8 @@ public:
 	bool IsRunning();
 	bool IsResizable();
 	bool IsMaximizable();
-	bool IsMinimized();
-	bool IsMaximized();
+	bool _IsMinimized();
+	bool _IsMaximized();
 	bool IsFocused();
 	bool IsActive();
 	bool IsFullscreen();

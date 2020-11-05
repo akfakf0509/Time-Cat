@@ -23,6 +23,7 @@ void Engine::Init()
 	inputM = new InputManager();
 	soundM = new SoundManager();
 	textureM = new TextureManager();
+	gameM = new GameManager();
 	sceneM = new SceneManager();
 }
 
@@ -41,6 +42,7 @@ void Engine::MainLoop()
 		sceneM->Update();
 
 		graphicM->Render();
+		gameM->Update();
 	}
 }
 
@@ -53,4 +55,5 @@ void Engine::Release()
 	SafeDelete(timeM);
 	SafeDelete(windowM);
 	SafeDelete(sceneM);
+	SafeDelete(gameM);
 }

@@ -16,10 +16,12 @@ void TextAnimation::OnStart() {
 
 		SetIsEnable(false);
 	}
+	
+	currentDelay = delay;
 }
 
 void TextAnimation::Update() {
-	if (delay <= 0) {
+	if (currentDelay <= 0) {
 		currentinterval -= RG2R_TimeM->GetDeltaTime();
 
 		if (currentinterval <= 0) {
@@ -35,7 +37,7 @@ void TextAnimation::Update() {
 		}
 	}
 	else {
-		delay -= RG2R_TimeM->GetDeltaTime();
+		currentDelay -= RG2R_TimeM->GetDeltaTime();
 	}
 }
 
@@ -60,6 +62,7 @@ TextAnimation* TextAnimation::SetDelay(float delay) {
 
 TextAnimation* TextAnimation::Reset() {
 	textRenderer->SetText("");
+	currentDelay = delay;
 
 	return this;
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include "Scene.h"
 
+#include <vector>
+
 class PlayingSongName;
 
 class PrologueScene :
@@ -18,8 +20,22 @@ private:
 	Object* cut1_Tree;
 
 	Object* cut2;
-
 	Object* cut3;
+	Object* cut4;
+	Object* cut5;
+	Object* cut6;
+	Object* cut7;
+	Object* cut8;
+
+	std::vector<Object*> snows;
+
+	Object* cut2_Frame;
+	Object* cut3_Frame;
+	Object* cut4_Frame;
+	Object* cut5_Frame;
+	Object* cut6_Frame;
+	Object* cut7_Frame;
+	Object* cut8_Frame;
 
 	PlayingSongName* playingSongName;
 public:

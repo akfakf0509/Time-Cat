@@ -15,6 +15,7 @@ private:
 	std::string nowText;
 
 	float delay = 0;
+	float currentDelay = 0;
 
 	float interval = 0.05f;
 	float currentinterval = 0.05f;

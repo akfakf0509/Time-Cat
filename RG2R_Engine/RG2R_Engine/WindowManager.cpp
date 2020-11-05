@@ -230,12 +230,12 @@ bool WindowManager::IsMaximizable()
 	return GetWindowLongA(hwnd_, GWL_STYLE) & WS_MAXIMIZEBOX ? true : false;
 }
 
-bool WindowManager::IsMinimized()
+bool WindowManager::_IsMinimized()
 {
 	return IsIconic(hwnd_);
 }
 
-bool WindowManager::IsMaximized()
+bool WindowManager::_IsMaximized()
 {
 	return IsZoomed(hwnd_);
 }

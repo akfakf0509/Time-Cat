@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 
-class MusicPlayer;
 class PlayingSongName;
 
 class MainScene :
@@ -18,7 +17,6 @@ private:
 
 	float playTime = 0;
 private:
-	MusicPlayer* musicPlayer;
 	PlayingSongName* playingSongName;
 
 	Object* cat;
@@ -30,6 +28,8 @@ private:
 	Object* settingImage;
 	Object* exitText;
 	Object* exitImage;
+
+
 public:
 	MainScene();
 	~MainScene();

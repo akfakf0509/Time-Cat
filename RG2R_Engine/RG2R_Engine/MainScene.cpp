@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "MainScene.h"
 
-#include "MusicPlayer.h"
 #include "AnimationRenderer.h"
 #include "SpriteRenderer.h"
 #include "TextRenderer.h"
@@ -12,12 +11,11 @@
 #include "Engine.h"
 
 #include "PlayingSongName.h"
+#include "Slider.h"
 
 #include "PrologueScene.h"
 
 MainScene::MainScene() {
-	musicPlayer = CreateObject()->AttachComponent<MusicPlayer>();
-
 	musicPaths.push_back("Ujabes - Kafka On The Shore");
 	musicPaths.push_back("Ujabes - Love Cells");
 	musicPaths.push_back("Ujabes - Violet Candle");
@@ -80,7 +78,7 @@ MainScene::MainScene() {
 		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
 	settingText->GetComponent<Transform>()
 		->SetPos(-8.f, -0.2f);
-	settingText->onClickExit = []() { cout << "Test" << endl; };
+	settingText->onClickExit = []() { RG2R_GameM->SettingM->SetIsEnable(true); };
 
 	settingImage = new Object();
 	settingImage->AttachComponent<SpriteRenderer>()
@@ -119,6 +117,7 @@ MainScene::MainScene() {
 	logo = CreateObject();
 	logo->AttachComponent<SpriteRenderer>()
 		->SetTexture("Resources/Sprites/MainScene/Logo.png");
+
 	logo->GetComponent<Transform>()
 		->SetAnchor(logo->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
 		->SetScale(0.5f, 0.5f)
@@ -126,6 +125,8 @@ MainScene::MainScene() {
 
 	playingSongName = new PlayingSongName();
 	AttachObject(playingSongName);
+
+	AttachObject(RG2R_GameM->SettingM);
 }
 
 MainScene::~MainScene() {
@@ -164,7 +165,7 @@ void MainScene::OnUpdate() {
 
 		songNameWstring.assign(songNameString.begin(), songNameString.end());
 
-		musicPlayer->Play(songNameWstring);
+		RG2R_GameM->MusicM->Play(songNameWstring);
 		playTime = musicLengths[index];
 
 		playingSongName->SetText(musicPaths[index]);

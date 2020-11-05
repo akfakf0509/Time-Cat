@@ -13,9 +13,6 @@
 #include "Rigidbody.h"
 #include "CollisionInfo.h"
 
-#include "DataManager.h"
-#include "PauseManager.h"
-
 #include "Cat.h"
 
 SickRoom::SickRoom() {
@@ -169,15 +166,16 @@ SickRoom::SickRoom() {
 		->SetTargetText("³¯ °ÅµÖÁØ Áý»ç´Ù.. ¾îµò°¡ ±«·Î¿ö º¸ÀÎ´Ù...");
 	bedOnPerson_Text->SetIsEnable(false);
 
-	dataManager = CreateObject();
-	dataManager->AttachComponent<DataManager>()
+	RG2R_GameM->DataM
 		->Insert("Scene", 2)
 		->Save("Resources/data");
-	pauseManager = new PauseManager();
-	pauseManager->resumeLambda = [=]() {
+
+	RG2R_GameM->PauseM->resumeLambda = [=]() {
 		paused = false;
+		RG2R_GameM->PauseM->Reset();
 	};
-	AttachObject(pauseManager);
+
+	AttachObject(RG2R_GameM->PauseM);
 }
 
 SickRoom::~SickRoom() {}
@@ -225,8 +223,7 @@ void SickRoom::OnUpdate() {
 
 		if (RG2R_InputM->GetKeyState(KeyCode::KEY_ESCAPE) == KeyState::KEYSTATE_ENTER) {
 			paused = true;
-			pauseManager->SetIsEnable(true);
-			//pauseManager->Reset();
+			RG2R_GameM->PauseM->SetIsEnable(true);
 		}
 	}
 

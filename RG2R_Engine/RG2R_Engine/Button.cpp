@@ -42,7 +42,7 @@ void Button::OnStart() {
 }
 
 void Button::OnUpdate() {
-	Vec2F position = transform->GetPos();
+	Vec2F position = transform->GetWorldPos();
 	Vec2F mouseposition = RG2R_InputM->GetMouseWorldPos();
 
 	std::function<void()> checkMouseStat = [=]() {
@@ -83,10 +83,13 @@ void Button::OnUpdate() {
 		}
 	}
 	else {
-		Rect rect = spriterenderer->GetRealArea();
+		Rect rect = spriterenderer->GetVisibleArea();
+		Vec2F distance = mouseposition - position;
 
-		if (position.x - rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().x <= mouseposition.x && mouseposition.x <= position.x + rect.right / INCH_PER_DISTANCE  / 2 * transform->GetScale().x &&
-			position.y - rect.bottom / INCH_PER_DISTANCE / 2 * transform->GetScale().y <= mouseposition.y && mouseposition.y <= position.y + rect.bottom / INCH_PER_DISTANCE / 2 * transform->GetScale().y) {
+		if (-rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().x + transform->GetWorldPos().x <= distance.x && 
+			distance.x <= rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().x + transform->GetWorldPos().x &&
+			-rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().y + transform->GetWorldPos().y <= distance.y &&
+			distance.y <= rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().y + transform->GetWorldPos().y) {
 			checkMouseStat();
 		}
 		else {

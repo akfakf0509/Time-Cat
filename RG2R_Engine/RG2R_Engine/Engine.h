@@ -7,6 +7,7 @@
 #include "TimeManager.h"
 #include "WindowManager.h"
 #include "SceneManager.h"
+#include "GameManager.h"
 
 #define RG2R Engine::GetInstance()
 #define RG2R_GraphicM Engine::GetInstance()->GetGraphicM()
@@ -16,6 +17,7 @@
 #define RG2R_TextureM Engine::GetInstance()->GetTextureM()
 #define RG2R_WindowM Engine::GetInstance()->GetWindowM()
 #define RG2R_SceneM Engine::GetInstance()->GetSceneM()
+#define RG2R_GameM Engine::GetInstance()->GetGameM()
 
 class Engine
 {
@@ -29,6 +31,7 @@ private:
 	TimeManager* timeM;
 	WindowManager* windowM;
 	SceneManager* sceneM;
+	GameManager* gameM;
 
 public:
 	~Engine();
@@ -46,4 +49,5 @@ public:
 	TimeManager* GetTimeM() { return timeM; }
 	WindowManager* GetWindowM() { return windowM; }
 	SceneManager* GetSceneM() { return sceneM; }
+	GameManager* GetGameM() { return gameM; }
 };

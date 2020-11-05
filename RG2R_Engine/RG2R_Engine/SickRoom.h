@@ -2,7 +2,6 @@
 #include "Scene.h"
 
 class Cat;
-class PauseManager;
 
 class SickRoom :
 	public Scene
@@ -28,9 +27,6 @@ private:
 	Object* frame_EnlargeMent;
 	Object* frame_EnlargeMent_Text;
 	Object* bedOnPerson_Text;
-
-	Object* dataManager;
-	PauseManager* pauseManager;
 public:
 	SickRoom();
 	~SickRoom();

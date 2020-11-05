@@ -166,17 +166,14 @@
     <Filter Include="소스 파일\Game\Objects\PlayingSongName">
       <UniqueIdentifier>{414f97ac-a888-42ee-ad99-a3053607037e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Engine\Element\Component\Components\MusicPlayer">
-      <UniqueIdentifier>{ebe7e573-c2af-4da0-ad3a-625bb9f5b91d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Engine\Element\Component\Components\TextAnimation">
       <UniqueIdentifier>{f0acce4e-7c3e-4e15-acb0-7e5ee0e10d04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Engine\Element\Component\Components\DataManager">
-      <UniqueIdentifier>{da73db09-14cb-43d7-adfa-c3bcfa476094}</UniqueIdentifier>
+    <Filter Include="소스 파일\Engine\System\GameManager">
+      <UniqueIdentifier>{6f894097-64f1-489f-8cc6-e2eff88b98fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Objects\PauseManager">
-      <UniqueIdentifier>{801cc226-7523-4737-a0bf-3fa259bb42c7}</UniqueIdentifier>
+    <Filter Include="소스 파일\Game\Objects\Slider">
+      <UniqueIdentifier>{096ed019-62e0-4b31-92e2-49bac292c5db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -330,20 +327,17 @@
     <ClInclude Include="PlayingSongName.h">
       <Filter>소스 파일\Game\Objects\PlayingSongName</Filter>
     </ClInclude>
-    <ClInclude Include="MusicPlayer.h">
-      <Filter>소스 파일\Engine\Element\Component\Components\MusicPlayer</Filter>
-    </ClInclude>
     <ClInclude Include="TextAnimation.h">
       <Filter>소스 파일\Engine\Element\Component\Components\TextAnimation</Filter>
-    </ClInclude>
-    <ClInclude Include="DataManager.h">
-      <Filter>소스 파일\Engine\Element\Component\Components\DataManager</Filter>
     </ClInclude>
     <ClInclude Include="ButtonState.h">
       <Filter>소스 파일\Engine\Element\Component\Components\Button</Filter>
     </ClInclude>
-    <ClInclude Include="PauseManager.h">
-      <Filter>소스 파일\Game\Objects\PauseManager</Filter>
+    <ClInclude Include="GameManager.h">
+      <Filter>소스 파일\Engine\System\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Slider.h">
+      <Filter>소스 파일\Game\Objects\Slider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -489,17 +483,14 @@
     <ClCompile Include="PlayingSongName.cpp">
       <Filter>소스 파일\Game\Objects\PlayingSongName</Filter>
     </ClCompile>
-    <ClCompile Include="MusicPlayer.cpp">
-      <Filter>소스 파일\Engine\Element\Component\Components\MusicPlayer</Filter>
-    </ClCompile>
     <ClCompile Include="TextAnimation.cpp">
       <Filter>소스 파일\Engine\Element\Component\Components\TextAnimation</Filter>
     </ClCompile>
-    <ClCompile Include="DataManager.cpp">
-      <Filter>소스 파일\Engine\Element\Component\Components\DataManager</Filter>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>소스 파일\Engine\System\GameManager</Filter>
     </ClCompile>
-    <ClCompile Include="PauseManager.cpp">
-      <Filter>소스 파일\Game\Objects\PauseManager</Filter>
+    <ClCompile Include="Slider.cpp">
+      <Filter>소스 파일\Game\Objects\Slider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

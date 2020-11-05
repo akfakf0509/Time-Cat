@@ -68,6 +68,90 @@ PrologueScene::PrologueScene() {
 		->SetAnchor(cut3->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
 		->SetPos(0, -12.f);
 
+	cut4 = CreateObject();
+	cut4->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/4.png");
+	cut4->GetComponent<Transform>()
+		->SetAnchor(cut3->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -18.f);
+
+	cut5 = CreateObject();
+	cut5->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/5.png");
+	cut5->GetComponent<Transform>()
+		->SetAnchor(cut3->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -24.f);
+
+	cut6 = CreateObject();
+	cut6->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/6.png");
+	cut6->GetComponent<Transform>()
+		->SetAnchor(cut3->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -30.f);
+
+	cut7 = CreateObject();
+	cut7->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/7.png");
+	cut7->GetComponent<Transform>()
+		->SetAnchor(cut3->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -36.f);
+
+	cut8 = CreateObject();
+	cut8->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/8.png");
+	cut8->GetComponent<Transform>()
+		->SetAnchor(cut3->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -42.f);
+
+	cut2_Frame = CreateObject();
+	cut2_Frame->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/Frame.png");
+	cut2_Frame->GetComponent<Transform>()
+		->SetAnchor(cut2_Frame->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -6.f);
+
+	cut3_Frame = CreateObject();
+	cut3_Frame->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/Frame.png");
+	cut3_Frame->GetComponent<Transform>()
+		->SetAnchor(cut3_Frame->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -12.f);
+
+	cut4_Frame = CreateObject();
+	cut4_Frame->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/Frame.png");
+	cut4_Frame->GetComponent<Transform>()
+		->SetAnchor(cut4_Frame->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -18.f);
+
+	cut5_Frame = CreateObject();
+	cut5_Frame->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/Frame.png");
+	cut5_Frame->GetComponent<Transform>()
+		->SetAnchor(cut5_Frame->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -24.f);
+
+	cut6_Frame = CreateObject();
+	cut6_Frame->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/Frame.png");
+	cut6_Frame->GetComponent<Transform>()
+		->SetAnchor(cut6_Frame->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -30.f);
+
+	cut7_Frame = CreateObject();
+	cut7_Frame->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/Frame.png");
+	cut7_Frame->GetComponent<Transform>()
+		->SetAnchor(cut7_Frame->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -30.f);
+
+	cut8_Frame = CreateObject();
+	cut8_Frame->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/PrologueScene/Frame.png");
+	cut8_Frame->GetComponent<Transform>()
+		->SetAnchor(cut8_Frame->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetPos(0, -42.f);
+
 	playingSongName = new PlayingSongName();
 	AttachObject(playingSongName);
 	playingSongName->commandLists[0]->Start();
@@ -77,7 +161,7 @@ PrologueScene::~PrologueScene() {
 }
 
 void PrologueScene::OnUpdate() {
-	if (RG2R_InputM->GetMouseWheel() < 0 && cameraTargetPos.y > -6.f * 2) {
+	if (RG2R_InputM->GetMouseWheel() < 0 && cameraTargetPos.y > -6.f * 7) {
 		cameraTargetPos += Vec2F(0, -6.f);
 	}
 	else if (RG2R_InputM->GetMouseWheel() > 0 && cameraTargetPos.y < 0) {
