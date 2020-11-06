@@ -19,8 +19,18 @@ void Cat::OnStart() {
 	idle->GetComponent<Transform>()->SetAnchor(idle->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter());
 
 	forward = CreateChildObject();
+	forward->AttachComponent<AnimationRenderer>()
+		->PushTextures("Resources/Sprites/CatAnimations/WalkForward")
+		->SetInterval(0.1f);
+	forward->GetComponent<Transform>()
+		->SetAnchor(forward->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter());
 
 	back = CreateChildObject();
+	back->AttachComponent<AnimationRenderer>()
+		->PushTextures("Resources/Sprites/CatAnimations/WalkBack")
+		->SetInterval(0.1f);
+	back->GetComponent<Transform>()
+		->SetAnchor(back->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter());
 
 	side = CreateChildObject();
 	side->AttachComponent<AnimationRenderer>()
@@ -90,6 +100,18 @@ void Cat::OnUpdate() {
 			forward->SetIsEnable(false);
 			back->SetIsEnable(false);
 			side->SetIsEnable(true);
+		}
+		else if (walkDirection == WalkDirection::WALKDIRECTION_FORWARD) {
+			idle->SetIsEnable(false);
+			forward->SetIsEnable(true);
+			back->SetIsEnable(false);
+			side->SetIsEnable(false);
+		}
+		else if (walkDirection == WalkDirection::WALKDIRECTION_BACK) {
+			idle->SetIsEnable(false);
+			forward->SetIsEnable(false);
+			back->SetIsEnable(true);
+			side->SetIsEnable(false);
 		}
 	}
 

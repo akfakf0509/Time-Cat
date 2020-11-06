@@ -14,6 +14,9 @@
 #include "CollisionInfo.h"
 
 #include "Cat.h"
+#include "PlayingSongName.h"
+
+#include "ProloguePuzzleCompelete.h"
 
 SickRoom::SickRoom() {
 	background = CreateObject();
@@ -31,7 +34,16 @@ SickRoom::SickRoom() {
 		->SetAnchor(shelf->GetComponent<SpriteRenderer>()->GetRealArea().GetCenter())
 		->SetPos(-0.15f, 0.7f);
 	shelf->AttachComponent<Button>();
-	shelf->onClickEnter = []() {cout << "Shelf Clicked" << endl; };
+	shelf->onClickEnter = [=]() {
+		if (sickRoomKey) {
+			RG2R_SceneM->ChangeScene(new ProloguePuzzleCompelete());
+		}
+
+		objectView = true;
+		viewingObject = shelf_Text;
+		filter->SetIsEnable(true);
+		viewingObject->SetIsEnable(true);
+	};
 
 	frame = CreateObject();
 	frame->SetName("Frame");
@@ -58,7 +70,21 @@ SickRoom::SickRoom() {
 	carpet->AttachComponent<Button>()
 		->SetHoverTexture("Resources/Sprites/SickRoom/Carpets/CarpetHover.png")
 		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_IMAGECHANGE);
-	carpet->onClickEnter = []() {cout << "Carpet Clicked" << endl; };
+	carpet->onClickEnter = [=]() {
+		if (!sickRoomKey) {
+			sickRoomKey = true;
+		}
+		else {
+			key_EnlargeMent->GetComponent<SpriteRenderer>()->SetIsEnable(false);
+			key_EnlargeMent_Text->GetComponent<TextAnimation>()->Reset();
+			key_EnlargeMent_Text->GetComponent<TextAnimation>()->SetTargetText("열쇠를 얻은 곳이다..");
+		}
+
+		objectView = true;
+		viewingObject = key_EnlargeMent;
+		filter->SetIsEnable(true);
+		viewingObject->SetIsEnable(true);
+	};
 
 	bed = CreateObject();
 	bed->AttachComponent<SpriteRenderer>()
@@ -87,7 +113,7 @@ SickRoom::SickRoom() {
 		->PushTextures("Resources/Sprites/SickRoom/BlanketAnimation");
 	blanket->GetComponent<Transform>()
 		->SetAnchor(blanket->GetComponent<AnimationRenderer>()->GetVisibleArea().GetCenter())
-		->SetPos(-5.95f, 1.4f);
+		->SetPos(-6.f, 1.5f);
 
 	curtain = CreateObject();
 	curtain->AttachComponent<SpriteRenderer>()
@@ -166,8 +192,61 @@ SickRoom::SickRoom() {
 		->SetTargetText("날 거둬준 집사다.. 어딘가 괴로워 보인다...");
 	bedOnPerson_Text->SetIsEnable(false);
 
+	key_EnlargeMent = CreateObject();
+	key_EnlargeMent->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/SickRoom/EnlargedObject/Key.png");
+	key_EnlargeMent->GetComponent<Transform>()
+		->SetAnchor(key_EnlargeMent->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetIsRelative(false);
+	key_EnlargeMent->SetIsEnable(false);
+
+	key_EnlargeMent_Text = key_EnlargeMent->CreateChildObject();
+	key_EnlargeMent_Text->AttachComponent<TextRenderer>()
+		->SetFontFamily(L"Sandoll 초록우산어린이")
+		->SetSize(30)
+		->SetTextColor(Color(1, 1, 1))
+		->SetAlignmentHeight(TextAlignment::ALIGN_CENTER)
+		->SetAlignmentWidth(TextAlignment::ALIGN_CENTER);
+	key_EnlargeMent_Text->AttachComponent<TextAnimation>()
+		->SetTargetText("열쇠다.. 어디에 쓰이는 열쇠일까?");
+	key_EnlargeMent_Text->GetComponent<Transform>()
+		->SetPos(0, -2.5f);
+
+	shelf_Text = CreateObject();
+	shelf_Text->GetComponent<Transform>()
+		->SetIsRelative(false);
+	shelf_Text->AttachComponent<TextRenderer>()
+		->SetFontFamily(L"Sandoll 초록우산어린이")
+		->SetSize(30)
+		->SetTextColor(Color(1, 1, 1))
+		->SetAlignmentHeight(TextAlignment::ALIGN_CENTER)
+		->SetAlignmentWidth(TextAlignment::ALIGN_CENTER);
+	shelf_Text->AttachComponent<TextAnimation>()
+		->SetTargetText("잠겨있다..");
+	shelf_Text->SetIsEnable(false);
+
+	tuto = CreateObject();
+	tuto->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/Helper/MoveKey.png");
+	tuto->GetComponent<Transform>()
+		->SetAnchor(tuto->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetScale(0.5f, 0.5f);
+	tuto->AttachComponent<Effect>()
+		->PushEffectInfo(new ColorMatrixEffectInfo(Color(1, 1, 1, 1)));
+
+	CommandList* commandList = new CommandList();
+	commandList->PushCommand([]() {}, 2);
+	for (float i = 1; i >= -0.1f; i -= 0.1f) {
+		commandList->PushCommand([=]() {
+			((ColorMatrixEffectInfo*)tuto->GetComponent<Effect>()->GetEffects()[0])->SetColor(Color(1, 1, 1, i));
+		}, 0.05f);
+	}
+
+	tuto->commandLists.push_back(commandList);
+	tuto->commandLists[0]->Start();
+
 	RG2R_GameM->DataM
-		->Insert("Scene", 2)
+		->Insert("Scene", std::to_string(2))
 		->Save("Resources/data");
 
 	RG2R_GameM->PauseM->resumeLambda = [=]() {
@@ -176,13 +255,20 @@ SickRoom::SickRoom() {
 	};
 
 	AttachObject(RG2R_GameM->PauseM);
+
+	RG2R_GameM->MusicM->Play(L"Resources/Musics/Ujabes - Kafka On The Shore.mp3");
+
+	playingSongName = new PlayingSongName();
+	playingSongName->SetText("Ujabes - Kafka On The Shore");
+	AttachObject(playingSongName);
+	playingSongName->commandLists[0]->Start();
 }
 
 SickRoom::~SickRoom() {}
 
 void SickRoom::OnUpdate() {
 	if (paused) {
-		
+
 	}
 	else if (objectView) {
 		if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_EXIT) {
@@ -200,20 +286,28 @@ void SickRoom::OnUpdate() {
 		}
 
 
-		if (RG2R_InputM->GetKeyState(KeyCode::KEY_W) == KeyState::KEYSTATE_STAY) {
+		if (RG2R_InputM->GetKeyState(KeyCode::KEY_W) == KeyState::KEYSTATE_STAY && cat->GetComponent<Transform>()->GetPos().y < 0.f) {
 			cat->GetComponent<Transform>()->Translate(Vec2F(0, 3.f) * RG2R_TimeM->GetDeltaTime());
+			cat->SetWalkDirection(WalkDirection::WALKDIRECTION_BACK);
 		}
-		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_S) == KeyState::KEYSTATE_STAY) {
+		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_W) == KeyState::KEYSTATE_EXIT) {
+			cat->SetWalkDirection(WalkDirection::WALKDIRECTION_NONE);
+		}
+		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_S) == KeyState::KEYSTATE_STAY && cat->GetComponent<Transform>()->GetPos().y > -1.8f) {
 			cat->GetComponent<Transform>()->Translate(Vec2F(0, -3.f) * RG2R_TimeM->GetDeltaTime());
+			cat->SetWalkDirection(WalkDirection::WALKDIRECTION_FORWARD);
 		}
-		if (RG2R_InputM->GetKeyState(KeyCode::KEY_D) == KeyState::KEYSTATE_STAY) {
+		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_S) == KeyState::KEYSTATE_EXIT) {
+			cat->SetWalkDirection(WalkDirection::WALKDIRECTION_NONE);
+		}
+		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_D) == KeyState::KEYSTATE_STAY && cat->GetComponent<Transform>()->GetPos().x < 11.f) {
 			cat->GetComponent<Transform>()->Translate(Vec2F(3.f, 0) * RG2R_TimeM->GetDeltaTime());
 			cat->SetWalkDirection(WalkDirection::WALKDIRECTION_RIGHT);
 		}
 		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_D) == KeyState::KEYSTATE_EXIT) {
 			cat->SetWalkDirection(WalkDirection::WALKDIRECTION_NONE);
 		}
-		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_A) == KeyState::KEYSTATE_STAY) {
+		else if (RG2R_InputM->GetKeyState(KeyCode::KEY_A) == KeyState::KEYSTATE_STAY && cat->GetComponent<Transform>()->GetPos().x > -11.f) {
 			cat->GetComponent<Transform>()->Translate(Vec2F(-3.f, 0) * RG2R_TimeM->GetDeltaTime());
 			cat->SetWalkDirection(WalkDirection::WALKDIRECTION_LEFT);
 		}

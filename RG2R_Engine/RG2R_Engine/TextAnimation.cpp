@@ -30,7 +30,7 @@ void TextAnimation::Update() {
 
 			if (nowText != targetText) {
 				std::string newtext = targetText;
-				newtext.resize(nowText.size() + 1);
+				nowText = newtext.substr(nowText.size(), 1);
 
 				textRenderer->SetText(newtext);
 			}

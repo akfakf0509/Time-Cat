@@ -39,6 +39,17 @@ void Button::OnStart() {
 			pushedTexture = spriterenderer->GetTexture();
 		}
 	}
+	else if (effectType == ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE) {
+		if (normalScale == Vec2F(1, 1)) {
+			normalScale = transform->GetScale();
+		}
+		if (hoverScale == Vec2F(1.1f, 1.1f)) {
+			hoverScale = transform->GetScale() + Vec2F(0.1f, 0.1f);
+		}
+		if (pushedScale == Vec2F(1.05f, 1.05f)) {
+			pushedScale = transform->GetScale() + Vec2F(0.05f, 0.05f);
+		}
+	}
 }
 
 void Button::OnUpdate() {
@@ -50,15 +61,21 @@ void Button::OnUpdate() {
 			StateUpdate(ButtonState::BUTTONSTATE_PUSHED);
 			GetOwner()->OnClickEnter();
 			ApplyListener(GetOwner()->onClickEnter);
+
+			clickedOn = true;
 		}
-		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_STAY) {
+		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_STAY && clickedOn) {
 			GetOwner()->OnClickStay();
 			ApplyListener(GetOwner()->onClickStay);
 		}
 		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_EXIT) {
-			StateUpdate(ButtonState::BUTTONSTATE_NONE);
-			GetOwner()->OnClickExit();
-			ApplyListener(GetOwner()->onClickExit);
+			if (clickedOn) {
+				StateUpdate(ButtonState::BUTTONSTATE_NONE);
+				GetOwner()->OnClickExit();
+				ApplyListener(GetOwner()->onClickExit);
+			}
+
+			clickedOn = false;
 		}
 		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_NONE) {
 			StateUpdate(ButtonState::BUTTONSTATE_HOVER);
@@ -84,12 +101,16 @@ void Button::OnUpdate() {
 	}
 	else {
 		Rect rect = spriterenderer->GetVisibleArea();
-		Vec2F distance = mouseposition - position;
+		Vec2F scale = Vec2F(1, 1);
 
-		if (-rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().x + transform->GetWorldPos().x <= distance.x && 
-			distance.x <= rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().x + transform->GetWorldPos().x &&
-			-rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().y + transform->GetWorldPos().y <= distance.y &&
-			distance.y <= rect.right / INCH_PER_DISTANCE / 2 * transform->GetScale().y + transform->GetWorldPos().y) {
+		for (Object* iter = GetOwner(); iter->GetParent() != nullptr; iter = iter->GetParent()) {
+			scale *= iter->GetComponent<Transform>()->GetScale();
+		}
+
+		if (-rect.right / INCH_PER_DISTANCE / 2 * scale.x + transform->GetWorldPos().x <= mouseposition.x && 
+			mouseposition.x <= rect.right / INCH_PER_DISTANCE / 2 * scale.x + transform->GetWorldPos().x &&
+			-rect.bottom / INCH_PER_DISTANCE / 2 * scale.y + transform->GetWorldPos().y <= mouseposition.y &&
+			mouseposition.y <= rect.bottom / INCH_PER_DISTANCE / 2 * scale.y + transform->GetWorldPos().y) {
 			checkMouseStat();
 		}
 		else {

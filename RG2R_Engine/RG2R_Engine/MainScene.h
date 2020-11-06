@@ -29,11 +29,11 @@ private:
 	Object* exitText;
 	Object* exitImage;
 
-
 public:
 	MainScene();
 	~MainScene();
 
+	void OnStart();
 	void OnUpdate();
 };
 

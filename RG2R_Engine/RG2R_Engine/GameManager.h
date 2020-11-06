@@ -8,19 +8,19 @@
 class DataManager
 {
 private:
-	std::map<std::string, int> datas;
+	std::map<std::string, std::string> datas;
 
 	bool loaded;
 public:
 	DataManager();
 	~DataManager();
 
-	DataManager* Insert(const std::string&, int);
+	DataManager* Insert(const std::string&, const std::string&);
 	DataManager* Save(const std::string&);
 	DataManager* Load(const std::string&);
 
 	bool GetIsLoad();
-	int GetData(const std::string&);
+	std::string GetData(const std::string&);
 };
 
 #include <dshow.h>
@@ -45,6 +45,8 @@ private:
 	Music* currentMusic = nullptr;
 
 	bool isPlaying;
+
+	long volume;
 
 public:
 	MusicPlayer();
@@ -89,12 +91,15 @@ class SettingManager :
 	public Object
 {
 private:
-	float masterVolume = 100;
-	float musicVolume = 100;
-	float effectVolume = 100;
+	float masterVolume = 1;
+	float musicVolume = 1;
+	float effectVolume = 1;
+
+	bool fullscreen = false;
 
 private:
 	Object* settingPanel;
+	Object* exit;
 	Slider* masterSlider;
 	Slider* musicSlider;
 	Slider* effectSlider;
@@ -108,6 +113,7 @@ public:
 	SettingManager();
 	~SettingManager();
 
+	void Load();
 };
 
 #define DataM GetDataM()

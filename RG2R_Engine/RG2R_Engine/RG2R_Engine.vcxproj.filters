@@ -160,9 +160,6 @@
     <Filter Include="소스 파일\Game\Scenes\SickRoom">
       <UniqueIdentifier>{a0de8cd2-7afc-48ec-9921-99bf88f4fdc7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Scenes\PrologueScene">
-      <UniqueIdentifier>{a5ee47d9-6e2f-4b15-a70e-caa8a7cc780c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Objects\PlayingSongName">
       <UniqueIdentifier>{414f97ac-a888-42ee-ad99-a3053607037e}</UniqueIdentifier>
     </Filter>
@@ -174,6 +171,27 @@
     </Filter>
     <Filter Include="소스 파일\Game\Objects\Slider">
       <UniqueIdentifier>{096ed019-62e0-4b31-92e2-49bac292c5db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Objects\ParticleSystem">
+      <UniqueIdentifier>{6601eed5-e848-462c-9b9b-948d6c4568cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\Prologue">
+      <UniqueIdentifier>{0e8c0758-9959-4013-87d9-a63f3b9f78c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\Prologue\PrologueSceneAfter">
+      <UniqueIdentifier>{3c56a416-43f6-4f1f-b421-07d98ffb869c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\Prologue\ProloguePuzzleCompelete">
+      <UniqueIdentifier>{512e498c-f941-4b49-82fd-457a3dd87a6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\Prologue\ProloguePuzzle">
+      <UniqueIdentifier>{e5522ea0-08e3-4046-8e99-b75b1f11129b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\Prologue\PrologueScene">
+      <UniqueIdentifier>{a5ee47d9-6e2f-4b15-a70e-caa8a7cc780c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Game\Scenes\BeforeStart">
+      <UniqueIdentifier>{dd3e0374-7466-48da-a080-8ec02c68c193}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -322,7 +340,7 @@
       <Filter>소스 파일\Engine\Element\Component\Components\Button</Filter>
     </ClInclude>
     <ClInclude Include="PrologueScene.h">
-      <Filter>소스 파일\Game\Scenes\PrologueScene</Filter>
+      <Filter>소스 파일\Game\Scenes\Prologue\PrologueScene</Filter>
     </ClInclude>
     <ClInclude Include="PlayingSongName.h">
       <Filter>소스 파일\Game\Objects\PlayingSongName</Filter>
@@ -339,6 +357,21 @@
     <ClInclude Include="Slider.h">
       <Filter>소스 파일\Game\Objects\Slider</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>소스 파일\Game\Objects\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ProloguePuzzle.h">
+      <Filter>소스 파일\Game\Scenes\Prologue\ProloguePuzzle</Filter>
+    </ClInclude>
+    <ClInclude Include="ProloguePuzzleCompelete.h">
+      <Filter>소스 파일\Game\Scenes\Prologue\ProloguePuzzleCompelete</Filter>
+    </ClInclude>
+    <ClInclude Include="PrologueSceneAfter.h">
+      <Filter>소스 파일\Game\Scenes\Prologue\PrologueSceneAfter</Filter>
+    </ClInclude>
+    <ClInclude Include="BeforeStart.h">
+      <Filter>소스 파일\Game\Scenes\BeforeStart</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="RG2R_Engine.rc">
@@ -350,6 +383,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="RG2R_Engine.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="게임아이콘.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
@@ -478,7 +514,7 @@
       <Filter>소스 파일\Game\Scenes\MainScene</Filter>
     </ClCompile>
     <ClCompile Include="PrologueScene.cpp">
-      <Filter>소스 파일\Game\Scenes\PrologueScene</Filter>
+      <Filter>소스 파일\Game\Scenes\Prologue\PrologueScene</Filter>
     </ClCompile>
     <ClCompile Include="PlayingSongName.cpp">
       <Filter>소스 파일\Game\Objects\PlayingSongName</Filter>
@@ -491,6 +527,21 @@
     </ClCompile>
     <ClCompile Include="Slider.cpp">
       <Filter>소스 파일\Game\Objects\Slider</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>소스 파일\Game\Objects\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ProloguePuzzle.cpp">
+      <Filter>소스 파일\Game\Scenes\Prologue\ProloguePuzzle</Filter>
+    </ClCompile>
+    <ClCompile Include="ProloguePuzzleCompelete.cpp">
+      <Filter>소스 파일\Game\Scenes\Prologue\ProloguePuzzleCompelete</Filter>
+    </ClCompile>
+    <ClCompile Include="PrologueSceneAfter.cpp">
+      <Filter>소스 파일\Game\Scenes\Prologue\PrologueSceneAfter</Filter>
+    </ClCompile>
+    <ClCompile Include="BeforeStart.cpp">
+      <Filter>소스 파일\Game\Scenes\BeforeStart</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

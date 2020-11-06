@@ -22,6 +22,8 @@ private:
 	BoxCollider* boxcollider;
 	CircleCollider* circleCollider;
 
+	bool clickedOn = false;
+
 public:
 	Texture* normalTexture = nullptr;
 	Texture* hoverTexture = nullptr;

@@ -5,6 +5,7 @@ class Slider :
 	public Object
 {
 private:
+	float perValue;
 	float value;
 
 private:
@@ -12,8 +13,13 @@ private:
 	Object* button;
 
 public:
+	std::function<void()> onValueChanged = []() {};
+
+public:
 	Slider();
 	~Slider();
+
+	void OnUpdate();
 
 	Slider* SetValue(float);
 

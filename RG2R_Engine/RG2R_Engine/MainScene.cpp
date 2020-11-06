@@ -14,6 +14,9 @@
 #include "Slider.h"
 
 #include "PrologueScene.h"
+#include "ProloguePuzzle.h"
+#include "SickRoom.h"
+#include "ProloguePuzzleCompelete.h"
 
 MainScene::MainScene() {
 	musicPaths.push_back("Ujabes - Kafka On The Shore");
@@ -53,7 +56,26 @@ MainScene::MainScene() {
 		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
 	startText->GetComponent<Transform>()
 		->SetPos(-6.f, 0.4f);
-	startText->onClickExit = []() { RG2R_SceneM->ChangeScene(new PrologueScene()); };
+	startText->onClickExit = []() { 
+		switch (std::stoi(RG2R_GameM->DataM->GetData("Scene")))
+		{
+		case 0:
+			RG2R_SceneM->ChangeScene(new PrologueScene());
+			break;
+		case 1:
+			RG2R_SceneM->ChangeScene(new ProloguePuzzle());
+			break;
+		case 2:
+			RG2R_SceneM->ChangeScene(new SickRoom());
+			break;
+		case 3:
+			RG2R_SceneM->ChangeScene(new ProloguePuzzleCompelete());
+			break;
+		default:
+			RG2R_SceneM->ChangeScene(new PrologueScene());
+			break;
+		}
+	};
 
 	startImage = new Object();
 	startImage->AttachComponent<SpriteRenderer>()
@@ -130,6 +152,10 @@ MainScene::MainScene() {
 }
 
 MainScene::~MainScene() {
+}
+
+void MainScene::OnStart() {
+	RG2R_GameM->SettingM->Load();
 }
 
 void MainScene::OnUpdate() {

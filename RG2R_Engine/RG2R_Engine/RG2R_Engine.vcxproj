@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="AnimationRenderData.h" />
     <ClInclude Include="AnimationRenderer.h" />
+    <ClInclude Include="BeforeStart.h" />
     <ClInclude Include="BitmapRenderData.h" />
     <ClInclude Include="BitmapRenderer.h" />
     <ClInclude Include="BoxCollider.h" />
@@ -182,8 +183,12 @@
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PlayingSongName.h" />
+    <ClInclude Include="ProloguePuzzle.h" />
+    <ClInclude Include="ProloguePuzzleCompelete.h" />
     <ClInclude Include="PrologueScene.h" />
+    <ClInclude Include="PrologueSceneAfter.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Resource.h" />
@@ -216,6 +221,7 @@
   <ItemGroup>
     <ClCompile Include="AnimationRenderData.cpp" />
     <ClCompile Include="AnimationRenderer.cpp" />
+    <ClCompile Include="BeforeStart.cpp" />
     <ClCompile Include="BitmapRenderData.cpp" />
     <ClCompile Include="BitmapRenderer.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
@@ -236,8 +242,12 @@
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PlayingSongName.cpp" />
+    <ClCompile Include="ProloguePuzzle.cpp" />
+    <ClCompile Include="ProloguePuzzleCompelete.cpp" />
     <ClCompile Include="PrologueScene.cpp" />
+    <ClCompile Include="PrologueSceneAfter.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Rigidbody.cpp" />
@@ -270,8 +280,9 @@
     <ResourceCompile Include="RG2R_Engine.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="RG2R_Engine.ico" />
     <Image Include="small.ico" />
+    <Image Include="RG2R_Engine.ico" />
+    <Image Include="게임아이콘.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Math.inl" />

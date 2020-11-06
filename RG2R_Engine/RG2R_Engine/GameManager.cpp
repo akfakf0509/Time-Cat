@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "GameManager.h"
 
-DataManager::DataManager() {}
+DataManager::DataManager() {
+	Load("Resources/Data");
+}
 
 DataManager::~DataManager() {}
 
-DataManager* DataManager::Insert(const std::string& key, int value) {
-	datas.insert(std::pair<std::string, int>(key, value));
+DataManager* DataManager::Insert(const std::string& key, const std::string& value) {
+	datas[key] = value;
 
 	return this;
 }
@@ -16,7 +18,7 @@ DataManager* DataManager::Save(const std::string& path) {
 	writeFile.open(path);
 
 	for (auto iter : datas) {
-		std::string data = iter.first + ":" + std::to_string(iter.second) + "\n";
+		std::string data = iter.first + ":" + iter.second + "\n";
 
 		writeFile.write(data.c_str(), data.size());
 	}
@@ -39,9 +41,7 @@ DataManager* DataManager::Load(const std::string& path) {
 			}
 
 			std::string key = data.substr(0, data.find(':'));
-			std::string value_S = data.substr(data.find(':') + 1);
-
-			int value = std::stoi(value_S);
+			std::string value = data.substr(data.find(':') + 1);
 
 			Insert(key, value);
 		}
@@ -49,6 +49,8 @@ DataManager* DataManager::Load(const std::string& path) {
 	else {
 		std::cout << "Error Can't load file" << std::endl;
 		std::cout << "Path : " << path << std::endl;
+
+		Save(path);
 	}
 
 	return this;
@@ -58,7 +60,11 @@ bool DataManager::GetIsLoad() {
 	return loaded;
 }
 
-int DataManager::GetData(const std::string& key) {
+std::string DataManager::GetData(const std::string& key) {
+	if (datas.find(key) == datas.end()) {
+		return "-1";
+	}
+
 	return datas[key];
 }
 
@@ -123,6 +129,7 @@ MusicPlayer* MusicPlayer::Play(const std::wstring& path) {
 
 	Load(path);
 
+	hr = currentMusic->pBasicAudio->put_Volume(volume);
 	hr = currentMusic->pControl->Run();
 
 	return this;
@@ -142,7 +149,11 @@ MusicPlayer* MusicPlayer::Stop() {
 }
 
 MusicPlayer* MusicPlayer::SetVolume(long volume) {
-	hr = currentMusic->pBasicAudio->put_Volume(volume);
+	this->volume = volume;
+
+	for (auto iter : musics) {
+		hr = iter.second->pBasicAudio->put_Volume(volume);
+	}
 
 	return this;
 }
@@ -154,10 +165,6 @@ MusicPlayer* MusicPlayer::SetPosition(REFTIME position) {
 }
 
 long MusicPlayer::GetVolume() {
-	long volume;
-
-	hr = currentMusic->pBasicAudio->get_Volume(&volume);
-
 	return volume;
 }
 
@@ -245,6 +252,7 @@ PauseManager::PauseManager() {
 	main->AttachComponent<Button>()
 		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
 	main->onClickExit = [=]() {
+		SetIsEnable(false);
 		RG2R_GameM->DataM->Save("Resources/Data");
 		RG2R_SceneM->ChangeScene(new MainScene());
 	};
@@ -301,20 +309,149 @@ SettingManager::SettingManager() {
 	settingPanel->GetComponent<Transform>()
 		->SetAnchor(settingPanel->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter());
 
+	exit = CreateChildObject();
+	exit->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/Setting/Exit.png");
+	exit->GetComponent<Transform>()
+		->SetAnchor(exit->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetScale(0.35f, 0.35f)
+		->SetPos(3.7f, 2.2f);
+	exit->AttachComponent<Button>()
+		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
+	exit->onClickExit = [=]() {
+		SetIsEnable(false);
+
+		RG2R_GameM->DataM->Insert("masterVolume", std::to_string(masterVolume));
+		RG2R_GameM->DataM->Insert("musicVolume", std::to_string(musicVolume));
+		RG2R_GameM->DataM->Insert("effectVolume", std::to_string(effectVolume));
+		RG2R_GameM->DataM->Insert("fullscreen", std::to_string(fullscreen));
+
+		RG2R_GameM->DataM->Save("Resources/Data");
+
+		exitLambda();
+	};
+
 	masterSlider = new Slider();
 	masterSlider->GetComponent<Transform>()
 		->SetScale(0.4f, 0.4f)
 		->SetPos(2.0f, 0.95f);
+	masterSlider->SetValue(masterVolume);
+	masterSlider->onValueChanged = [=]() {
+		masterVolume = masterSlider->GetValue();
+
+		RG2R_GameM->DataM->Insert("masterVolume", std::to_string(masterVolume));
+
+		RG2R_GameM->DataM->Save("Resources/Data");
+
+		RG2R_GameM->MusicM->SetVolume(-10000 + 10000 * masterVolume * musicVolume);
+	};
 	settingPanel->AttachChild(masterSlider);
 
 	musicSlider = new Slider();
 	musicSlider->GetComponent<Transform>()
 		->SetScale(0.4f, 0.4f)
 		->SetPos(2.0f, 0.45f);
+	musicSlider->SetValue(musicVolume);
+	musicSlider->onValueChanged = [=]() {
+		musicVolume = musicSlider->GetValue();
+
+		RG2R_GameM->DataM->Insert("musicVolume", std::to_string(musicVolume));
+
+		RG2R_GameM->DataM->Save("Resources/Data");
+
+		RG2R_GameM->MusicM->SetVolume(-10000 + 10000 * masterVolume * musicVolume);
+	};
 	settingPanel->AttachChild(musicSlider);
+
+	effectSlider = new Slider();
+	effectSlider->GetComponent<Transform>()
+		->SetScale(0.4f, 0.4f)
+		->SetPos(2.0f, -0.05f);
+	effectSlider->SetValue(effectVolume);
+	settingPanel->AttachChild(effectSlider);
+
+	fullscreenButton = CreateChildObject();
+	fullscreenButton->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/Setting/NoApply.png");
+	fullscreenButton->GetComponent<Transform>()
+		->SetAnchor(fullscreenButton->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetScale(0.4f, 0.4f)
+		->SetPos(0.7f, -0.85f);
+	fullscreenButton->AttachComponent<Button>()
+		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_NONE);
+	fullscreenButton->onClickExit = [=]() {
+		fullscreen = true;
+
+		RG2R_GameM->DataM->Insert("fullscreen", std::to_string(fullscreen));
+
+		RG2R_GameM->DataM->Save("Resources/Data");
+
+		RG2R_WindowM->SetFullscreen(true);
+
+		fullscreenButton->GetComponent<SpriteRenderer>()->SetTexture("Resources/Sprites/Setting/Apply.png");
+		windowscreenButton->GetComponent<SpriteRenderer>()->SetTexture("Resources/Sprites/Setting/NoApply.png");
+	};
+
+	windowscreenButton = CreateChildObject();
+	windowscreenButton->AttachComponent<SpriteRenderer>()
+		->SetTexture("Resources/Sprites/Setting/NoApply.png");
+	windowscreenButton->GetComponent<Transform>()
+		->SetAnchor(windowscreenButton->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter())
+		->SetScale(0.4f, 0.4f)
+		->SetPos(0.7f, -1.35f);
+	windowscreenButton->AttachComponent<Button>()
+		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_NONE);
+	windowscreenButton->onClickExit = [=]() {
+		fullscreen = false;
+
+		RG2R_GameM->DataM->Insert("fullscreen", std::to_string(fullscreen));
+
+		RG2R_GameM->DataM->Save("Resources/Data");
+
+		RG2R_WindowM->SetFullscreen(false);
+
+		fullscreenButton->GetComponent<SpriteRenderer>()->SetTexture("Resources/Sprites/Setting/NoApply.png");
+		windowscreenButton->GetComponent<SpriteRenderer>()->SetTexture("Resources/Sprites/Setting/Apply.png");
+	};
 }
 
 SettingManager::~SettingManager() {
+}
+
+void SettingManager::Load() {
+	masterVolume = std::stof(RG2R_GameM->DataM->GetData("masterVolume"));
+	if (masterVolume == -1) {
+		masterVolume = 1;
+	}
+	masterSlider->SetValue(masterVolume);
+	masterSlider->onValueChanged();
+
+	musicVolume = std::stof(RG2R_GameM->DataM->GetData("musicVolume"));
+	if (musicVolume == -1) {
+		musicVolume = 1;
+	}
+	musicSlider->SetValue(musicVolume);
+	musicSlider->onValueChanged();
+
+	effectVolume = std::stof(RG2R_GameM->DataM->GetData("effectVolume"));
+	if (effectVolume == -1) {
+		effectVolume = 1;
+	}
+	effectSlider->SetValue(effectVolume);
+	effectSlider->onValueChanged();
+
+	fullscreen = std::stoi(RG2R_GameM->DataM->GetData("fullscreen"));
+	if (fullscreen == -1) {
+		fullscreen = 1;
+	}
+	RG2R_WindowM->SetFullscreen(fullscreen);
+
+	if (fullscreen) {
+		fullscreenButton->GetComponent<SpriteRenderer>()->SetTexture("Resources/Sprites/Setting/Apply.png");
+	}
+	else {
+		windowscreenButton->GetComponent<SpriteRenderer>()->SetTexture("Resources/Sprites/Setting/Apply.png");
+	}
 }
 
 GameManager::GameManager() {

@@ -5,13 +5,12 @@
 #include "SpriteRenderer.h"
 #include <iostream>
 
+#include "BeforeStart.h"
 #include "MainScene.h"
-#include "PrologueScene.h"
-#include "SickRoom.h"
 
 Scene* SceneManager::FirstScene()
 {
-	return new MainScene();
+	return new BeforeStart();
 }
 
 SceneManager::SceneManager()
