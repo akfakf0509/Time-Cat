@@ -25,14 +25,21 @@ void TextAnimation::Update() {
 		currentinterval -= RG2R_TimeM->GetDeltaTime();
 
 		if (currentinterval <= 0) {
-			nowText = textRenderer->GetText();
 			currentinterval = interval;
 
 			if (nowText != targetText) {
-				std::string newtext = targetText;
-				nowText = newtext.substr(nowText.size(), 1);
+				std::string tmp = targetText;
 
-				textRenderer->SetText(newtext);
+				if ((tmp[nowText.size()] & 0x80) != 0x80) {
+					tmp.resize(nowText.size() + 1);
+				}
+				else {
+					tmp.resize(nowText.size() + 2);
+				}
+
+				nowText = tmp;
+
+				textRenderer->SetText(tmp);
 			}
 		}
 	}
@@ -62,6 +69,7 @@ TextAnimation* TextAnimation::SetDelay(float delay) {
 
 TextAnimation* TextAnimation::Reset() {
 	textRenderer->SetText("");
+	nowText = "";
 	currentDelay = delay;
 
 	return this;

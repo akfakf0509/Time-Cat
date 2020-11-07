@@ -38,7 +38,7 @@ BeforeStart::BeforeStart() {
 		->SetAlignmentWidth(TextAlignment::ALIGN_CENTER);
 	text->AttachComponent<TextAnimation>()
 		->SetTargetText("헤드셋을 착용하시면 더 몰입감있게 게임을 플레이 하실 수 있습니다.")
-		->SetInterval(0.02f);
+		->SetInterval(0.05f);
 
 	CommandList* commandList = new CommandList();
 
