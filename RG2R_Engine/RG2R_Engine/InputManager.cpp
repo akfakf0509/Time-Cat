@@ -13,7 +13,7 @@ InputManager::InputManager()
 	// Keyboard 객체 받아옴
 	directInput_->CreateDevice(GUID_SysKeyboard, &keyboard_, nullptr); // 키보드 디바이스 새로 생성
 	keyboard_->SetDataFormat(&c_dfDIKeyboard); // 데이터 포맷을 키보드로
-	keyboard_->SetCooperativeLevel(RG2R_WindowM->GetHwnd(), DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+	keyboard_->SetCooperativeLevel(RG2R_WindowM->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	// 백그라운드에서는 사용하지 않음, 장치를 사용하고 있을 동안 뺏기지 않음
 	keyboard_->Acquire();
 

@@ -8,8 +8,14 @@
 #include "BoxCollider.h"
 #include "CircleCollider.h"
 
+int Button::buttoncount = 0;
+
 Button::Button()
 {
+	buttonindex = buttoncount;
+	buttoncount++;
+
+	cout << buttoncount << endl;
 }
 
 Button::~Button()

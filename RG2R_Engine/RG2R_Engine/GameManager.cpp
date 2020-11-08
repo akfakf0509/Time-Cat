@@ -49,6 +49,7 @@ DataManager* DataManager::Load(const std::string& path) {
 	else {
 		std::cout << "Error Can't load file" << std::endl;
 		std::cout << "Path : " << path << std::endl;
+		std::cout << "Create File.. " <<
 
 		Save(path);
 	}

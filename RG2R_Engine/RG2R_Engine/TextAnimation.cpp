@@ -22,7 +22,7 @@ void TextAnimation::OnStart() {
 
 void TextAnimation::Update() {
 	if (currentDelay <= 0) {
-		currentinterval -= RG2R_TimeM->GetDeltaTime();
+		currentinterval -= RG2R_TimeM->GetDeltaTime();	
 
 		if (currentinterval <= 0) {
 			currentinterval = interval;
