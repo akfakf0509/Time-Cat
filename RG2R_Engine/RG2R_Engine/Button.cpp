@@ -8,14 +8,8 @@
 #include "BoxCollider.h"
 #include "CircleCollider.h"
 
-int Button::buttoncount = 0;
-
 Button::Button()
 {
-	buttonindex = buttoncount;
-	buttoncount++;
-
-	cout << buttoncount << endl;
 }
 
 Button::~Button()
@@ -74,15 +68,6 @@ void Button::OnUpdate() {
 			GetOwner()->OnClickStay();
 			ApplyListener(GetOwner()->onClickStay);
 		}
-		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_EXIT) {
-			if (clickedOn) {
-				StateUpdate(ButtonState::BUTTONSTATE_NONE);
-				GetOwner()->OnClickExit();
-				ApplyListener(GetOwner()->onClickExit);
-			}
-
-			clickedOn = false;
-		}
 		else if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_NONE) {
 			StateUpdate(ButtonState::BUTTONSTATE_HOVER);
 		}
@@ -113,7 +98,7 @@ void Button::OnUpdate() {
 			scale *= iter->GetComponent<Transform>()->GetScale();
 		}
 
-		if (-rect.right / INCH_PER_DISTANCE / 2 * scale.x + transform->GetWorldPos().x <= mouseposition.x && 
+		if (-rect.right / INCH_PER_DISTANCE / 2 * scale.x + transform->GetWorldPos().x <= mouseposition.x &&
 			mouseposition.x <= rect.right / INCH_PER_DISTANCE / 2 * scale.x + transform->GetWorldPos().x &&
 			-rect.bottom / INCH_PER_DISTANCE / 2 * scale.y + transform->GetWorldPos().y <= mouseposition.y &&
 			mouseposition.y <= rect.bottom / INCH_PER_DISTANCE / 2 * scale.y + transform->GetWorldPos().y) {
@@ -122,6 +107,14 @@ void Button::OnUpdate() {
 		else {
 			StateUpdate(ButtonState::BUTTONSTATE_NONE);
 		}
+	}
+
+	if (RG2R_InputM->GetMouseState(MouseCode::MOUSE_LBUTTON) == KeyState::KEYSTATE_EXIT && clickedOn) {
+		StateUpdate(ButtonState::BUTTONSTATE_NONE);
+		GetOwner()->OnClickExit();
+		ApplyListener(GetOwner()->onClickExit);
+
+		clickedOn = false;
 	}
 }
 

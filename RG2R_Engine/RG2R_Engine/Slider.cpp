@@ -15,24 +15,17 @@ Slider::Slider() {
 	bar->AttachComponent<Button>()
 		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_NONE);
 	bar->onClickEnter = [=]() {
-		Transform* transform = button->GetComponent<Transform>();
 		Rect rect = bar->GetComponent<SpriteRenderer>()->GetVisibleArea();
 		Vec2F distance = RG2R_InputM->GetMouseWorldPos() - bar->GetComponent<Transform>()->GetWorldPos();
 
-
-		if (-rect.right / INCH_PER_DISTANCE / 2 * GetComponent<Transform>()->GetScale().x + GetComponent<Transform>()->GetWorldPos().x < RG2R_InputM->GetMouseWorldPos().x &&
-			RG2R_InputM->GetMouseWorldPos().x < rect.right / INCH_PER_DISTANCE / 2 * GetComponent<Transform>()->GetScale().x + GetComponent<Transform>()->GetWorldPos().x) {
-			transform->SetPos(distance.x / GetComponent<Transform>()->GetScale().x, 0);
-		}
-
 		value = (rect.right / INCH_PER_DISTANCE / 2 * GetComponent<Transform>()->GetScale().x + distance.x) / (rect.right / INCH_PER_DISTANCE * GetComponent<Transform>()->GetScale().x);
 
-		if (value < 0) {
-			value = 0;
-		}
-		else if (value > 1) {
-			value = 1;
-		}
+		SetValue(value);
+
+		clickedOn = true;
+	};
+	bar->onClickExit = [=]() {
+		clickedOn = false;
 	};
 
 	button = bar->CreateChildObject();
@@ -42,25 +35,11 @@ Slider::Slider() {
 		->SetAnchor(button->GetComponent<SpriteRenderer>()->GetVisibleArea().GetCenter());
 	button->AttachComponent<Button>()
 		->SetButtonEffectType(ButtonEffectType::BUTTONEFFECTTYPE_SCALECHANGE);
-	button->onClickStay = [=]() {
-		Transform* transform = button->GetComponent<Transform>();
-		Rect rect = bar->GetComponent<SpriteRenderer>()->GetVisibleArea();
-		Vec2F distance = RG2R_InputM->GetMouseWorldPos() - bar->GetComponent<Transform>()->GetWorldPos();
-
-
-		if (-rect.right / INCH_PER_DISTANCE / 2 * GetComponent<Transform>()->GetScale().x + GetComponent<Transform>()->GetWorldPos().x < RG2R_InputM->GetMouseWorldPos().x && 
-			RG2R_InputM->GetMouseWorldPos().x < rect.right / INCH_PER_DISTANCE / 2 * GetComponent<Transform>()->GetScale().x + GetComponent<Transform>()->GetWorldPos().x) {
-			transform->SetPos(distance.x / GetComponent<Transform>()->GetScale().x, 0);
-		}
-
-		value = (rect.right / INCH_PER_DISTANCE / 2 * GetComponent<Transform>()->GetScale().x + distance.x) / (rect.right / INCH_PER_DISTANCE * GetComponent<Transform>()->GetScale().x);
-
-		if (value < 0) {
-			value = 0;
-		}
-		else if (value > 1) {
-			value = 1;
-		}
+	button->onClickEnter = [=]() {
+		clickedOn = true;
+	};
+	button->onClickExit = [=]() {
+		clickedOn = false;
 	};
 }
 
@@ -68,6 +47,15 @@ Slider::~Slider() {
 }
 
 void Slider::OnUpdate() {
+	if (clickedOn) {
+		Rect rect = bar->GetComponent<SpriteRenderer>()->GetVisibleArea();
+		Vec2F distance = RG2R_InputM->GetMouseWorldPos() - bar->GetComponent<Transform>()->GetWorldPos();
+
+		value = (rect.right / INCH_PER_DISTANCE / 2 * GetComponent<Transform>()->GetScale().x + distance.x) / (rect.right / INCH_PER_DISTANCE * GetComponent<Transform>()->GetScale().x);
+
+		SetValue(value);
+	}
+
 	if (value != perValue) {
 		onValueChanged();
 	}
@@ -77,11 +65,11 @@ void Slider::OnUpdate() {
 
 Slider* Slider::SetValue(float value) {
 	if (value < 0) {
-			value = 0;
-		}
-		else if (value > 1) {
-			value = 1;
-		}
+		value = 0;
+	}
+	else if (value > 1) {
+		value = 1;
+	}
 
 	this->value = value;
 

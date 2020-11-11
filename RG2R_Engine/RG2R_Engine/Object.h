@@ -64,6 +64,7 @@ public:
 	// 자식 관련
 	void DetachChild(Object*); // 자식 해제
 	void AttachChild(Object*); // 자식 추가
+	std::vector<Object*> GetChilds();
 	Object* FindChild(Object*); // 오브젝트를 찾음
 	Object* FindChildByTag(std::string); // 태그에 맞는 오브젝트를 찾음
 	Object* FindChildByName(std::string); // 이름에 맞는 오브젝트를 찾음

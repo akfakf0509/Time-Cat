@@ -18,6 +18,7 @@ public:
 	ProloguePuzzle();
 	~ProloguePuzzle();
 
+	void OnRenderBefore();
 	void OnUpdate();
 };
 

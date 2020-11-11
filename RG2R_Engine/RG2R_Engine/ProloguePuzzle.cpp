@@ -32,6 +32,7 @@ ProloguePuzzle::ProloguePuzzle() {
 
 			transform->SetPos(RG2R_InputM->GetMouseWorldPos() + mouseDistances[i - 1]);
 		};
+		tmp->SetName(std::to_string(i));
 
 		puzzles.push_back(tmp);
 	}
@@ -60,6 +61,13 @@ ProloguePuzzle::ProloguePuzzle() {
 }
 
 ProloguePuzzle::~ProloguePuzzle() {
+}
+
+void ProloguePuzzle::OnRenderBefore(){
+	cout << "render is called" << endl;
+	for (auto iter : *RG2R_GraphicM->GetViewRenderBuffer()) {
+		cout << iter->GetOwner()->GetName() << endl << endl;
+	}
 }
 
 void ProloguePuzzle::OnUpdate() {

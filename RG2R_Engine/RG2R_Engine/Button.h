@@ -24,9 +24,6 @@ private:
 
 	bool clickedOn = false;
 
-	static int buttoncount;
-	int buttonindex;
-
 public:
 	Texture* normalTexture = nullptr;
 	Texture* hoverTexture = nullptr;

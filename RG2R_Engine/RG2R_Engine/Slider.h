@@ -8,6 +8,8 @@ private:
 	float perValue;
 	float value;
 
+	bool clickedOn = false;
+
 private:
 	Object* bar;
 	Object* button;

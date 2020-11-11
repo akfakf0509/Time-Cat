@@ -169,9 +169,6 @@
     <Filter Include="소스 파일\Engine\System\GameManager">
       <UniqueIdentifier>{6f894097-64f1-489f-8cc6-e2eff88b98fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Objects\Slider">
-      <UniqueIdentifier>{096ed019-62e0-4b31-92e2-49bac292c5db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Game\Objects\ParticleSystem">
       <UniqueIdentifier>{6601eed5-e848-462c-9b9b-948d6c4568cc}</UniqueIdentifier>
     </Filter>
@@ -192,6 +189,15 @@
     </Filter>
     <Filter Include="소스 파일\Game\Scenes\BeforeStart">
       <UniqueIdentifier>{dd3e0374-7466-48da-a080-8ec02c68c193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Element\Prefab">
+      <UniqueIdentifier>{b9daf425-6d23-4c72-bfda-68de5af44c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Element\Prefab\Slider">
+      <UniqueIdentifier>{096ed019-62e0-4b31-92e2-49bac292c5db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Engine\Element\Prefab\ButtonObject">
+      <UniqueIdentifier>{d29f292f-7ef3-456a-aaf4-c3897e0314bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -355,7 +361,7 @@
       <Filter>소스 파일\Engine\System\GameManager</Filter>
     </ClInclude>
     <ClInclude Include="Slider.h">
-      <Filter>소스 파일\Game\Objects\Slider</Filter>
+      <Filter>소스 파일\Engine\Element\Prefab\Slider</Filter>
     </ClInclude>
     <ClInclude Include="ParticleSystem.h">
       <Filter>소스 파일\Game\Objects\ParticleSystem</Filter>
@@ -371,6 +377,12 @@
     </ClInclude>
     <ClInclude Include="BeforeStart.h">
       <Filter>소스 파일\Game\Scenes\BeforeStart</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Canvas.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -526,7 +538,7 @@
       <Filter>소스 파일\Engine\System\GameManager</Filter>
     </ClCompile>
     <ClCompile Include="Slider.cpp">
-      <Filter>소스 파일\Game\Objects\Slider</Filter>
+      <Filter>소스 파일\Engine\Element\Prefab\Slider</Filter>
     </ClCompile>
     <ClCompile Include="ParticleSystem.cpp">
       <Filter>소스 파일\Game\Objects\ParticleSystem</Filter>
@@ -542,6 +554,12 @@
     </ClCompile>
     <ClCompile Include="BeforeStart.cpp">
       <Filter>소스 파일\Game\Scenes\BeforeStart</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Canvas.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -300,6 +300,10 @@ void Object::AttachChild(Object* child)
 	OnAttachChild();
 }
 
+std::vector<Object*> Object::GetChilds() {
+	return childs;
+}
+
 Object* Object::FindChild(Object* object)
 {
 	for (auto iter : childs)
