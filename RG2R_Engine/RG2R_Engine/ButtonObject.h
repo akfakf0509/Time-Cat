@@ -1,12 +1,14 @@
 #pragma once
-#include "Object.h"
+#include "UIElement.h"
 class ButtonObject :
-	public Object
+	public UIElement
 {
 private:
 	Object* text;
 public:
 	ButtonObject();
 	~ButtonObject();
+
+	void OnUpdate();
 };
 
