@@ -167,7 +167,6 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonObject.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Canvas.h" />
     <ClInclude Include="Cat.h" />
     <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="Collider.h" />
@@ -213,7 +212,6 @@
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="UIElement.h" />
     <ClInclude Include="ViewRenderData.h" />
     <ClInclude Include="ViewRenderer.h" />
     <ClInclude Include="WindowManager.h" />
@@ -231,7 +229,6 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonObject.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Canvas.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -277,7 +274,6 @@
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="ViewRenderData.cpp" />
     <ClCompile Include="ViewRenderer.cpp" />
     <ClCompile Include="WindowManager.cpp" />
