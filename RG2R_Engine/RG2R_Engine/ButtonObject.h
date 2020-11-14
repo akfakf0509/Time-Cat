@@ -1,10 +1,13 @@
 #pragma once
-#include "UIElement.h"
+#include "Object.h"
 class ButtonObject :
-	public UIElement
+	public Object
 {
 private:
 	Object* text;
+
+	bool clickedOn = false;
+
 public:
 	ButtonObject();
 	~ButtonObject();

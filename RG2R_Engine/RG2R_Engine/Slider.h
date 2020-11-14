@@ -1,12 +1,13 @@
 #pragma once
-#include "UIElement.h"
-
+#include "Object.h"
 class Slider :
-	public UIElement
+	public Object
 {
 private:
 	float perValue;
 	float value;
+
+	bool clickedOn = false;
 
 private:
 	Object* bar;
